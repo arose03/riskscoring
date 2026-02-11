@@ -23,6 +23,12 @@ export default function PropertyInfoPanel({
   const uniRef = useRef<HTMLDivElement>(null);
   const addressInputRef = useRef<HTMLInputElement>(null);
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
+  const propertyInfoRef = useRef(propertyInfo);
+  const onChangeRef = useRef(onChange);
+
+  // Keep refs current
+  propertyInfoRef.current = propertyInfo;
+  onChangeRef.current = onChange;
 
   // Filter universities
   const filteredUnis = uniSearch
@@ -42,48 +48,54 @@ export default function PropertyInfoPanel({
     return () => document.removeEventListener('mousedown', handleClick);
   }, []);
 
-  // Google Places Autocomplete initialization
-  const initAutocomplete = useCallback(() => {
-    if (!addressInputRef.current || autocompleteRef.current) return;
-    if (!window.google?.maps?.places) return;
-
-    autocompleteRef.current = new google.maps.places.Autocomplete(
-      addressInputRef.current,
-      {
-        types: ['address'],
-        componentRestrictions: { country: 'us' },
-        fields: ['formatted_address', 'geometry'],
-      }
-    );
-
-    autocompleteRef.current.addListener('place_changed', () => {
-      const place = autocompleteRef.current?.getPlace();
-      if (place?.formatted_address) {
-        onChange({
-          ...propertyInfo,
-          address: place.formatted_address,
-          formattedAddress: place.formatted_address,
-          lat: place.geometry?.location?.lat() ?? null,
-          lng: place.geometry?.location?.lng() ?? null,
-        });
-      }
-    });
-  }, [onChange, propertyInfo]);
-
+  // Google Places Autocomplete initialization (stable — no deps on propertyInfo)
   useEffect(() => {
-    // Try to init if Google Maps is already loaded
-    initAutocomplete();
+    if (autocompleteRef.current) return;
 
-    // If not loaded, wait for it
+    function init() {
+      if (!addressInputRef.current || autocompleteRef.current) return;
+      if (!window.google?.maps?.places) return;
+
+      try {
+        autocompleteRef.current = new google.maps.places.Autocomplete(
+          addressInputRef.current,
+          {
+            types: ['address'],
+            componentRestrictions: { country: 'us' },
+            fields: ['formatted_address', 'geometry'],
+          }
+        );
+
+        autocompleteRef.current.addListener('place_changed', () => {
+          const place = autocompleteRef.current?.getPlace();
+          if (place?.formatted_address) {
+            onChangeRef.current({
+              ...propertyInfoRef.current,
+              address: place.formatted_address,
+              formattedAddress: place.formatted_address,
+              lat: place.geometry?.location?.lat() ?? null,
+              lng: place.geometry?.location?.lng() ?? null,
+            });
+          }
+        });
+      } catch {
+        // Google Maps API failed (invalid key, domain not authorized, etc.)
+        // Input continues to work as a plain text field
+        console.warn('Google Places Autocomplete failed to initialize');
+      }
+    }
+
+    // Try immediately, then poll
+    init();
     const checkInterval = setInterval(() => {
       if (window.google?.maps?.places) {
-        initAutocomplete();
+        init();
         clearInterval(checkInterval);
       }
     }, 500);
 
     return () => clearInterval(checkInterval);
-  }, [initAutocomplete]);
+  }, []);
 
   const handleField = (field: keyof PropertyInfo, value: string) => {
     onChange({ ...propertyInfo, [field]: value });

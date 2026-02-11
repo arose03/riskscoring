@@ -21,14 +21,6 @@ export default function PropertyInfoPanel({
   const [uniSearch, setUniSearch] = useState('');
   const [uniDropdownOpen, setUniDropdownOpen] = useState(false);
   const uniRef = useRef<HTMLDivElement>(null);
-  const addressInputRef = useRef<HTMLInputElement>(null);
-  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
-  const propertyInfoRef = useRef(propertyInfo);
-  const onChangeRef = useRef(onChange);
-
-  // Keep refs current
-  propertyInfoRef.current = propertyInfo;
-  onChangeRef.current = onChange;
 
   // Filter universities
   const filteredUnis = uniSearch
@@ -46,55 +38,6 @@ export default function PropertyInfoPanel({
     }
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
-  }, []);
-
-  // Google Places Autocomplete initialization (stable — no deps on propertyInfo)
-  useEffect(() => {
-    if (autocompleteRef.current) return;
-
-    function init() {
-      if (!addressInputRef.current || autocompleteRef.current) return;
-      if (!window.google?.maps?.places) return;
-
-      try {
-        autocompleteRef.current = new google.maps.places.Autocomplete(
-          addressInputRef.current,
-          {
-            types: ['address'],
-            componentRestrictions: { country: 'us' },
-            fields: ['formatted_address', 'geometry'],
-          }
-        );
-
-        autocompleteRef.current.addListener('place_changed', () => {
-          const place = autocompleteRef.current?.getPlace();
-          if (place?.formatted_address) {
-            onChangeRef.current({
-              ...propertyInfoRef.current,
-              address: place.formatted_address,
-              formattedAddress: place.formatted_address,
-              lat: place.geometry?.location?.lat() ?? null,
-              lng: place.geometry?.location?.lng() ?? null,
-            });
-          }
-        });
-      } catch {
-        // Google Maps API failed (invalid key, domain not authorized, etc.)
-        // Input continues to work as a plain text field
-        console.warn('Google Places Autocomplete failed to initialize');
-      }
-    }
-
-    // Try immediately, then poll
-    init();
-    const checkInterval = setInterval(() => {
-      if (window.google?.maps?.places) {
-        init();
-        clearInterval(checkInterval);
-      }
-    }, 500);
-
-    return () => clearInterval(checkInterval);
   }, []);
 
   const handleField = (field: keyof PropertyInfo, value: string) => {
@@ -115,11 +58,10 @@ export default function PropertyInfoPanel({
           </label>
           <div className="flex gap-2">
             <input
-              ref={addressInputRef}
               type="text"
               value={propertyInfo.address}
               onChange={(e) => handleField('address', e.target.value)}
-              placeholder="Start typing an address..."
+              placeholder="Enter address, then click Geocode"
               className="flex-1 px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
             <button

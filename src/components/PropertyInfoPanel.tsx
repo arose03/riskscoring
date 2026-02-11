@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { PropertyInfo, University } from '@/lib/types';
 
 interface PropertyInfoPanelProps {

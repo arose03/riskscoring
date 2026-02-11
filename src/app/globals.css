@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy: #0f172a;
+  --navy-light: #1e293b;
+  --bind-green: #16a34a;
+  --refer-amber: #d97706;
+  --decline-red: #dc2626;
+  --auto-green: #16a34a;
+  --ai-amber: #d97706;
+  --manual-gray: #6b7280;
+}
+
+body {
+  color: #1e293b;
+  background: #f1f5f9;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Score button styles */
+.score-btn {
+  @apply w-9 h-9 rounded-md text-sm font-semibold transition-all duration-150 border-2 cursor-pointer;
+}
+
+.score-btn-unselected {
+  @apply bg-white border-slate-200 text-slate-500 hover:border-slate-400 hover:bg-slate-50;
+}
+
+.score-btn-1 {
+  @apply bg-emerald-50 border-emerald-500 text-emerald-700;
+}
+.score-btn-2 {
+  @apply bg-green-50 border-green-500 text-green-700;
+}
+.score-btn-3 {
+  @apply bg-yellow-50 border-yellow-500 text-yellow-700;
+}
+.score-btn-4 {
+  @apply bg-orange-50 border-orange-500 text-orange-700;
+}
+.score-btn-5 {
+  @apply bg-red-50 border-red-500 text-red-700;
+}
+
+/* Gauge */
+.gauge-track {
+  background: linear-gradient(to right, #16a34a, #22c55e, #eab308, #f97316, #dc2626);
+}

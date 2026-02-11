@@ -9,6 +9,8 @@ interface PropertyInfoPanelProps {
   universities: University[];
   onUniversitySelect: (university: University) => void;
   onAddressGeocode: (address: string) => void;
+  loadingGeocode?: boolean;
+  geocodeError?: string;
 }
 
 export default function PropertyInfoPanel({
@@ -17,6 +19,8 @@ export default function PropertyInfoPanel({
   universities,
   onUniversitySelect,
   onAddressGeocode,
+  loadingGeocode,
+  geocodeError,
 }: PropertyInfoPanelProps) {
   const [uniSearch, setUniSearch] = useState('');
   const [uniDropdownOpen, setUniDropdownOpen] = useState(false);
@@ -67,12 +71,17 @@ export default function PropertyInfoPanel({
             <button
               type="button"
               onClick={() => onAddressGeocode(propertyInfo.address)}
-              disabled={!propertyInfo.address}
+              disabled={!propertyInfo.address || loadingGeocode}
               className="px-3 py-2 text-xs font-medium bg-slate-800 text-white rounded-lg hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              Geocode
+              {loadingGeocode ? 'Geocoding...' : 'Geocode'}
             </button>
           </div>
+          {geocodeError && (
+            <div className="text-[10px] text-red-500 mt-1">
+              {geocodeError}
+            </div>
+          )}
           {propertyInfo.lat && propertyInfo.lng && (
             <div className="text-[10px] text-slate-400 mt-1">
               {propertyInfo.formattedAddress} ({propertyInfo.lat.toFixed(4)},{' '}

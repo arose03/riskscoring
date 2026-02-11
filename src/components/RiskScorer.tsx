@@ -50,6 +50,8 @@ export default function RiskScorer() {
   const [glScores, setGlScores] = useState<Record<string, FactorScore>>({});
 
   // Loading states
+  const [loadingGeocode, setLoadingGeocode] = useState(false);
+  const [geocodeError, setGeocodeError] = useState('');
   const [loadingCrime, setLoadingCrime] = useState(false);
   const [loadingRent, setLoadingRent] = useState(false);
 
@@ -215,6 +217,8 @@ export default function RiskScorer() {
   // Handle geocoding
   const handleAddressGeocode = async (address: string) => {
     if (!address) return;
+    setLoadingGeocode(true);
+    setGeocodeError('');
 
     try {
       const res = await fetch('/api/geocode', {
@@ -223,6 +227,11 @@ export default function RiskScorer() {
         body: JSON.stringify({ address }),
       });
       const data = await res.json();
+
+      if (!res.ok) {
+        setGeocodeError(data.error || 'Geocoding failed');
+        return;
+      }
 
       if (data.lat && data.lng) {
         setPropertyInfo((prev) => ({
@@ -242,9 +251,14 @@ export default function RiskScorer() {
           fetchCrimeEstimate();
           fetchRentEstimate();
         }, 100);
+      } else {
+        setGeocodeError('No results found for this address');
       }
     } catch (err) {
       console.error('Geocode failed:', err);
+      setGeocodeError('Network error — check your connection');
+    } finally {
+      setLoadingGeocode(false);
     }
   };
 
@@ -331,6 +345,8 @@ export default function RiskScorer() {
           universities={universities}
           onUniversitySelect={handleUniversitySelect}
           onAddressGeocode={handleAddressGeocode}
+          loadingGeocode={loadingGeocode}
+          geocodeError={geocodeError}
         />
       </div>
 

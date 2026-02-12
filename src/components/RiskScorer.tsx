@@ -306,7 +306,9 @@ export default function RiskScorer() {
   const fetchRentEstimate = async (
     address: string,
     universityName: string,
-    actualRent?: string
+    actualRent?: string,
+    units?: string,
+    occupancy?: string
   ) => {
     if (!address) return;
     setLoadingRent(true);
@@ -318,6 +320,8 @@ export default function RiskScorer() {
           address,
           universityName,
           actualRent: actualRent || undefined,
+          units: units || undefined,
+          occupancy: occupancy || undefined,
         }),
       });
       if (!res.ok) {
@@ -327,11 +331,14 @@ export default function RiskScorer() {
       const data = await res.json();
       if (!data.score) return;
 
+      const rangeStr = data.estimated_market_range_low && data.estimated_market_range_high
+        ? ` Est. market range: $${data.estimated_market_range_low}–$${data.estimated_market_range_high}/bed/mo.`
+        : '';
       const rentScore: FactorScore = {
         factorKey: 'rent_vs_market',
         score: data.score as ScoreValue,
         source: 'AI_EST',
-        aiReasoning: `${data.reasoning}${data.estimated_market_rent ? ` Est. market rent: $${data.estimated_market_rent}/bed/mo.` : ''}`,
+        aiReasoning: `${data.reasoning}${rangeStr}`,
         aiConfidence: data.confidence,
       };
       setPropertyScores((prev) => ({ ...prev, rent_vs_market: rentScore }));
@@ -574,7 +581,9 @@ export default function RiskScorer() {
               fetchRentEstimate(
                 propertyInfo.formattedAddress || propertyInfo.address,
                 propertyInfo.universityName,
-                propertyInfo.actualRent
+                propertyInfo.actualRent,
+                propertyInfo.units,
+                propertyInfo.occupancy
               )
             }
             disabled={loadingRent}

@@ -77,6 +77,13 @@
     "campus_lng": -87.5503
   },
   {
+    "name": "University of Georgia Athens",
+    "party_score": 7.8,
+    "tier": 3,
+    "campus_lat": 33.948,
+    "campus_lng": -83.3773
+  },
+  {
     "name": "University of Georgia",
     "party_score": 7.7,
     "tier": 3,
@@ -96,6 +103,27 @@
     "tier": 3,
     "campus_lat": 41.6611,
     "campus_lng": -91.5302
+  },
+  {
+    "name": "California State University Chico",
+    "party_score": 7.5,
+    "tier": 2,
+    "campus_lat": 39.7285,
+    "campus_lng": -121.8463
+  },
+  {
+    "name": "University of Arizona Tucson",
+    "party_score": 7.5,
+    "tier": 3,
+    "campus_lat": 32.2319,
+    "campus_lng": -110.9501
+  },
+  {
+    "name": "Arizona State University Tempe",
+    "party_score": 7.5,
+    "tier": 3,
+    "campus_lat": 33.4242,
+    "campus_lng": -111.9281
   },
   {
     "name": "Clemson University",
@@ -217,6 +245,41 @@
     "campus_lng": -92.3277
   },
   {
+    "name": "Southern Illinois University Carbondale",
+    "party_score": 7,
+    "tier": 2,
+    "campus_lat": 37.7154,
+    "campus_lng": -89.2168
+  },
+  {
+    "name": "Bowling Green State University",
+    "party_score": 7,
+    "tier": 2,
+    "campus_lat": 41.3798,
+    "campus_lng": -83.6254
+  },
+  {
+    "name": "Miami University Ohio",
+    "party_score": 7,
+    "tier": 2,
+    "campus_lat": 39.5115,
+    "campus_lng": -84.7316
+  },
+  {
+    "name": "Texas State University",
+    "party_score": 7,
+    "tier": 2,
+    "campus_lat": 29.8884,
+    "campus_lng": -97.9384
+  },
+  {
+    "name": "Tulane University New Orleans",
+    "party_score": 7,
+    "tier": 2,
+    "campus_lat": 29.9401,
+    "campus_lng": -90.1206
+  },
+  {
     "name": "University of Oklahoma",
     "party_score": 6.98,
     "tier": 2,
@@ -271,6 +334,20 @@
     "tier": 2,
     "campus_lat": 43.1348,
     "campus_lng": -70.9358
+  },
+  {
+    "name": "University at Buffalo",
+    "party_score": 6.8,
+    "tier": 2,
+    "campus_lat": 43.0008,
+    "campus_lng": -78.789
+  },
+  {
+    "name": "University of Miami Coral Gables",
+    "party_score": 6.8,
+    "tier": 2,
+    "campus_lat": 25.7175,
+    "campus_lng": -80.279
   },
   {
     "name": "Colorado State University",
@@ -357,6 +434,139 @@
     "campus_lng": -86.9212
   },
   {
+    "name": "SUNY Albany",
+    "party_score": 6.5,
+    "tier": 2,
+    "campus_lat": 42.6866,
+    "campus_lng": -73.8234
+  },
+  {
+    "name": "SUNY Oneonta",
+    "party_score": 6.5,
+    "tier": 1,
+    "campus_lat": 42.4665,
+    "campus_lng": -75.064
+  },
+  {
+    "name": "California Polytechnic State University",
+    "party_score": 6.5,
+    "tier": 2,
+    "campus_lat": 35.305,
+    "campus_lng": -120.6625
+  },
+  {
+    "name": "Bloomsburg University",
+    "party_score": 6.5,
+    "tier": 1,
+    "campus_lat": 41.0065,
+    "campus_lng": -76.4477
+  },
+  {
+    "name": "Indiana University of Pennsylvania",
+    "party_score": 6.5,
+    "tier": 1,
+    "campus_lat": 40.6172,
+    "campus_lng": -79.156
+  },
+  {
+    "name": "Georgia Southern University",
+    "party_score": 6.5,
+    "tier": 2,
+    "campus_lat": 32.4229,
+    "campus_lng": -81.7837
+  },
+  {
+    "name": "University of North Carolina Wilmington",
+    "party_score": 6.5,
+    "tier": 2,
+    "campus_lat": 34.2274,
+    "campus_lng": -77.8731
+  },
+  {
+    "name": "University of Wisconsin-Milwaukee",
+    "party_score": 6.5,
+    "tier": 2,
+    "campus_lat": 43.0766,
+    "campus_lng": -87.8818
+  },
+  {
+    "name": "University of Wisconsin-La Crosse",
+    "party_score": 6.5,
+    "tier": 1,
+    "campus_lat": 43.8133,
+    "campus_lng": -91.2268
+  },
+  {
+    "name": "University of Wisconsin-Eau Claire",
+    "party_score": 6.5,
+    "tier": 1,
+    "campus_lat": 44.7973,
+    "campus_lng": -91.4988
+  },
+  {
+    "name": "University of Wisconsin-Oshkosh",
+    "party_score": 6.5,
+    "tier": 1,
+    "campus_lat": 44.0257,
+    "campus_lng": -88.5512
+  },
+  {
+    "name": "University of Wisconsin-Whitewater",
+    "party_score": 6.5,
+    "tier": 1,
+    "campus_lat": 42.8392,
+    "campus_lng": -88.7338
+  },
+  {
+    "name": "Northern Illinois University",
+    "party_score": 6.5,
+    "tier": 2,
+    "campus_lat": 41.9344,
+    "campus_lng": -88.7719
+  },
+  {
+    "name": "Western Illinois University",
+    "party_score": 6.5,
+    "tier": 1,
+    "campus_lat": 40.4728,
+    "campus_lng": -90.6855
+  },
+  {
+    "name": "Illinois State University",
+    "party_score": 6.5,
+    "tier": 2,
+    "campus_lat": 40.5103,
+    "campus_lng": -88.9986
+  },
+  {
+    "name": "Kent State University",
+    "party_score": 6.5,
+    "tier": 2,
+    "campus_lat": 41.1489,
+    "campus_lng": -81.3409
+  },
+  {
+    "name": "University of Cincinnati",
+    "party_score": 6.5,
+    "tier": 2,
+    "campus_lat": 39.1329,
+    "campus_lng": -84.515
+  },
+  {
+    "name": "North Dakota State University",
+    "party_score": 6.5,
+    "tier": 2,
+    "campus_lat": 46.8965,
+    "campus_lng": -96.8018
+  },
+  {
+    "name": "University of Louisiana at Lafayette",
+    "party_score": 6.5,
+    "tier": 2,
+    "campus_lat": 30.2117,
+    "campus_lng": -92.0198
+  },
+  {
     "name": "University of Central Florida",
     "party_score": 6.48,
     "tier": 2,
@@ -413,6 +623,13 @@
     "campus_lng": -78.869
   },
   {
+    "name": "SUNY Cortland",
+    "party_score": 6.3,
+    "tier": 1,
+    "campus_lat": 42.5952,
+    "campus_lng": -76.1834
+  },
+  {
     "name": "Coastal Carolina University",
     "party_score": 6.28,
     "tier": 2,
@@ -439,6 +656,20 @@
     "tier": 2,
     "campus_lat": 41.4806,
     "campus_lng": -71.5229
+  },
+  {
+    "name": "SUNY Oswego",
+    "party_score": 6.2,
+    "tier": 1,
+    "campus_lat": 43.4515,
+    "campus_lng": -76.5449
+  },
+  {
+    "name": "California State University Long Beach",
+    "party_score": 6.2,
+    "tier": 2,
+    "campus_lat": 33.7838,
+    "campus_lng": -118.1141
   },
   {
     "name": "University of Washington",
@@ -497,6 +728,272 @@
     "campus_lng": -84.7751
   },
   {
+    "name": "SUNY Plattsburgh",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 44.695,
+    "campus_lng": -73.474
+  },
+  {
+    "name": "California State University Fullerton",
+    "party_score": 6,
+    "tier": 2,
+    "campus_lat": 33.8829,
+    "campus_lng": -117.8854
+  },
+  {
+    "name": "California State University Fresno",
+    "party_score": 6,
+    "tier": 2,
+    "campus_lat": 36.8134,
+    "campus_lng": -119.7483
+  },
+  {
+    "name": "West Chester University",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 39.951,
+    "campus_lng": -75.6025
+  },
+  {
+    "name": "Shippensburg University",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 40.059,
+    "campus_lng": -77.52
+  },
+  {
+    "name": "Slippery Rock University",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 41.0665,
+    "campus_lng": -80.0584
+  },
+  {
+    "name": "East Stroudsburg University",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 40.9993,
+    "campus_lng": -75.1826
+  },
+  {
+    "name": "Kutztown University",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 40.5159,
+    "campus_lng": -75.7757
+  },
+  {
+    "name": "University of North Carolina at Charlotte",
+    "party_score": 6,
+    "tier": 2,
+    "campus_lat": 35.3076,
+    "campus_lng": -80.7334
+  },
+  {
+    "name": "North Carolina A&T State University",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 36.0755,
+    "campus_lng": -79.7724
+  },
+  {
+    "name": "Old Dominion University",
+    "party_score": 6,
+    "tier": 2,
+    "campus_lat": 36.886,
+    "campus_lng": -76.3055
+  },
+  {
+    "name": "Radford University",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 37.1354,
+    "campus_lng": -80.5593
+  },
+  {
+    "name": "Towson University",
+    "party_score": 6,
+    "tier": 2,
+    "campus_lat": 39.3943,
+    "campus_lng": -76.6111
+  },
+  {
+    "name": "Florida A&M University",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 30.4244,
+    "campus_lng": -84.2843
+  },
+  {
+    "name": "University of Wisconsin-Stevens Point",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 44.5303,
+    "campus_lng": -89.571
+  },
+  {
+    "name": "University of Wisconsin-Platteville",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 42.7268,
+    "campus_lng": -90.4788
+  },
+  {
+    "name": "University of Wisconsin-Stout",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 44.8622,
+    "campus_lng": -91.9213
+  },
+  {
+    "name": "University of Minnesota Duluth",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 46.8205,
+    "campus_lng": -92.0867
+  },
+  {
+    "name": "Minnesota State University Mankato",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 44.1455,
+    "campus_lng": -93.9994
+  },
+  {
+    "name": "St. Cloud State University",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 45.551,
+    "campus_lng": -94.151
+  },
+  {
+    "name": "Eastern Illinois University",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 39.4818,
+    "campus_lng": -88.1779
+  },
+  {
+    "name": "Indiana State University",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 39.4656,
+    "campus_lng": -87.4074
+  },
+  {
+    "name": "University of South Dakota",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 42.7866,
+    "campus_lng": -96.9263
+  },
+  {
+    "name": "University of Texas at San Antonio",
+    "party_score": 6,
+    "tier": 2,
+    "campus_lat": 29.5826,
+    "campus_lng": -98.62
+  },
+  {
+    "name": "University of Houston",
+    "party_score": 6,
+    "tier": 2,
+    "campus_lat": 29.7199,
+    "campus_lng": -95.3422
+  },
+  {
+    "name": "Sam Houston State University",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 30.7146,
+    "campus_lng": -95.5464
+  },
+  {
+    "name": "Stephen F. Austin State University",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 31.6214,
+    "campus_lng": -94.6506
+  },
+  {
+    "name": "University of North Texas Denton",
+    "party_score": 6,
+    "tier": 2,
+    "campus_lat": 33.2088,
+    "campus_lng": -97.1541
+  },
+  {
+    "name": "Howard University",
+    "party_score": 6,
+    "tier": 2,
+    "campus_lat": 38.9224,
+    "campus_lng": -77.0198
+  },
+  {
+    "name": "Southern University Baton Rouge",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 30.5208,
+    "campus_lng": -91.1894
+  },
+  {
+    "name": "Grambling State University",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 32.5253,
+    "campus_lng": -92.7148
+  },
+  {
+    "name": "Southeastern Louisiana University",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 30.5125,
+    "campus_lng": -90.4641
+  },
+  {
+    "name": "University of Southern Mississippi",
+    "party_score": 6,
+    "tier": 2,
+    "campus_lat": 31.3275,
+    "campus_lng": -89.3329
+  },
+  {
+    "name": "Middle Tennessee State University",
+    "party_score": 6,
+    "tier": 2,
+    "campus_lat": 35.8483,
+    "campus_lng": -86.3647
+  },
+  {
+    "name": "University of Memphis",
+    "party_score": 6,
+    "tier": 2,
+    "campus_lat": 35.1191,
+    "campus_lng": -89.9375
+  },
+  {
+    "name": "Eastern Kentucky University",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 37.7332,
+    "campus_lng": -84.2944
+  },
+  {
+    "name": "Western Kentucky University",
+    "party_score": 6,
+    "tier": 2,
+    "campus_lat": 36.9866,
+    "campus_lng": -86.456
+  },
+  {
+    "name": "Marshall University",
+    "party_score": 6,
+    "tier": 1,
+    "campus_lat": 38.4238,
+    "campus_lng": -82.4258
+  },
+  {
     "name": "Ohio University",
     "party_score": 5.98,
     "tier": 2,
@@ -551,6 +1048,111 @@
     "tier": 2,
     "campus_lat": 42.3355,
     "campus_lng": -71.1685
+  },
+  {
+    "name": "SUNY Binghamton",
+    "party_score": 5.8,
+    "tier": 2,
+    "campus_lat": 42.0898,
+    "campus_lng": -75.9697
+  },
+  {
+    "name": "SUNY Brockport",
+    "party_score": 5.8,
+    "tier": 1,
+    "campus_lat": 43.2147,
+    "campus_lng": -77.9383
+  },
+  {
+    "name": "SUNY New Paltz",
+    "party_score": 5.8,
+    "tier": 1,
+    "campus_lat": 41.744,
+    "campus_lng": -74.0842
+  },
+  {
+    "name": "SUNY Buffalo State",
+    "party_score": 5.8,
+    "tier": 1,
+    "campus_lat": 42.9334,
+    "campus_lng": -78.8817
+  },
+  {
+    "name": "California State University Northridge",
+    "party_score": 5.8,
+    "tier": 2,
+    "campus_lat": 34.24,
+    "campus_lng": -118.5291
+  },
+  {
+    "name": "California State University Sacramento",
+    "party_score": 5.8,
+    "tier": 2,
+    "campus_lat": 38.5607,
+    "campus_lng": -121.4236
+  },
+  {
+    "name": "University of California Santa Cruz",
+    "party_score": 5.8,
+    "tier": 2,
+    "campus_lat": 36.9914,
+    "campus_lng": -122.0609
+  },
+  {
+    "name": "University of Alabama at Birmingham",
+    "party_score": 5.8,
+    "tier": 2,
+    "campus_lat": 33.5021,
+    "campus_lng": -86.8063
+  },
+  {
+    "name": "Georgia State University",
+    "party_score": 5.8,
+    "tier": 2,
+    "campus_lat": 33.753,
+    "campus_lng": -84.3856
+  },
+  {
+    "name": "Virginia Commonwealth University",
+    "party_score": 5.8,
+    "tier": 2,
+    "campus_lat": 37.5488,
+    "campus_lng": -77.453
+  },
+  {
+    "name": "Florida Atlantic University",
+    "party_score": 5.8,
+    "tier": 2,
+    "campus_lat": 26.3709,
+    "campus_lng": -80.1014
+  },
+  {
+    "name": "Florida International University",
+    "party_score": 5.8,
+    "tier": 2,
+    "campus_lat": 25.7562,
+    "campus_lng": -80.3755
+  },
+  {
+    "name": "Marquette University Milwaukee",
+    "party_score": 5.8,
+    "tier": 1,
+    "campus_lat": 43.0389,
+    "campus_lng": -87.9296
+  },
+  {
+    "name": "University of Utah",
+    "party_score": 5.8,
+    "tier": 2,
+    "campus_lat": 40.7649,
+    "campus_lng": -111.8421
+  },
+  {
+    "name": "Rowan University",
+    "party_score": 5.8,
+    "tier": 1,
+    "campus_lat": 39.7104,
+    "campus_lng": -75.1199
   },
   {
     "name": "University of Virginia",
@@ -637,6 +1239,629 @@
     "campus_lng": -79.5026
   },
   {
+    "name": "SUNY Fredonia",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 42.4492,
+    "campus_lng": -79.3345
+  },
+  {
+    "name": "SUNY Potsdam",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 44.6682,
+    "campus_lng": -74.982
+  },
+  {
+    "name": "Marist College",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 41.7266,
+    "campus_lng": -73.9327
+  },
+  {
+    "name": "Siena College",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 42.7187,
+    "campus_lng": -73.7528
+  },
+  {
+    "name": "San Jose State University",
+    "party_score": 5.5,
+    "tier": 2,
+    "campus_lat": 37.3352,
+    "campus_lng": -121.8811
+  },
+  {
+    "name": "Humboldt State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 40.8765,
+    "campus_lng": -124.0786
+  },
+  {
+    "name": "Sonoma State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 38.3405,
+    "campus_lng": -122.6744
+  },
+  {
+    "name": "University of California Riverside",
+    "party_score": 5.5,
+    "tier": 2,
+    "campus_lat": 33.9737,
+    "campus_lng": -117.3281
+  },
+  {
+    "name": "Millersville University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 39.9973,
+    "campus_lng": -76.353
+  },
+  {
+    "name": "Quinnipiac University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 41.4192,
+    "campus_lng": -72.8932
+  },
+  {
+    "name": "Roger Williams University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 41.642,
+    "campus_lng": -71.2614
+  },
+  {
+    "name": "Bryant University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 41.8696,
+    "campus_lng": -71.5673
+  },
+  {
+    "name": "University of Massachusetts Dartmouth",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 41.632,
+    "campus_lng": -70.9979
+  },
+  {
+    "name": "Keene State College",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 42.9314,
+    "campus_lng": -72.2811
+  },
+  {
+    "name": "Plymouth State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 43.7568,
+    "campus_lng": -71.6878
+  },
+  {
+    "name": "University of South Alabama",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 30.696,
+    "campus_lng": -88.1788
+  },
+  {
+    "name": "Troy University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 31.7985,
+    "campus_lng": -85.9676
+  },
+  {
+    "name": "University of North Alabama",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 34.7506,
+    "campus_lng": -87.6987
+  },
+  {
+    "name": "Jacksonville State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 33.8218,
+    "campus_lng": -85.768
+  },
+  {
+    "name": "Kennesaw State University",
+    "party_score": 5.5,
+    "tier": 2,
+    "campus_lat": 34.0378,
+    "campus_lng": -84.581
+  },
+  {
+    "name": "Valdosta State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 30.8512,
+    "campus_lng": -83.2895
+  },
+  {
+    "name": "University of North Carolina at Greensboro",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 36.0688,
+    "campus_lng": -79.8106
+  },
+  {
+    "name": "Western Carolina University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 35.3093,
+    "campus_lng": -83.1842
+  },
+  {
+    "name": "North Carolina Central University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 35.9737,
+    "campus_lng": -78.8978
+  },
+  {
+    "name": "College of William & Mary",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 37.2716,
+    "campus_lng": -76.7144
+  },
+  {
+    "name": "Christopher Newport University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 37.0621,
+    "campus_lng": -76.4947
+  },
+  {
+    "name": "Longwood University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 37.2973,
+    "campus_lng": -78.392
+  },
+  {
+    "name": "Salisbury University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 38.3735,
+    "campus_lng": -75.6015
+  },
+  {
+    "name": "University of North Florida",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 30.2694,
+    "campus_lng": -81.509
+  },
+  {
+    "name": "Florida Gulf Coast University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 26.4639,
+    "campus_lng": -81.7726
+  },
+  {
+    "name": "Winona State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 44.046,
+    "campus_lng": -91.6622
+  },
+  {
+    "name": "University of Northern Iowa",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 42.5133,
+    "campus_lng": -92.46
+  },
+  {
+    "name": "Bradley University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 40.697,
+    "campus_lng": -89.6171
+  },
+  {
+    "name": "University of Akron",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 41.0764,
+    "campus_lng": -81.5083
+  },
+  {
+    "name": "University of Toledo",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 41.6572,
+    "campus_lng": -83.6135
+  },
+  {
+    "name": "Butler University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 39.8396,
+    "campus_lng": -86.1724
+  },
+  {
+    "name": "Grand Valley State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 42.9632,
+    "campus_lng": -85.8884
+  },
+  {
+    "name": "Eastern Michigan University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 42.2505,
+    "campus_lng": -83.6238
+  },
+  {
+    "name": "Ferris State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 43.6869,
+    "campus_lng": -85.485
+  },
+  {
+    "name": "Northern Michigan University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 46.5604,
+    "campus_lng": -87.4066
+  },
+  {
+    "name": "Missouri State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 37.2053,
+    "campus_lng": -93.2825
+  },
+  {
+    "name": "Southeast Missouri State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 37.3129,
+    "campus_lng": -89.5623
+  },
+  {
+    "name": "University of Nebraska at Omaha",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 41.2581,
+    "campus_lng": -96.0107
+  },
+  {
+    "name": "University of Northern Colorado",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 40.4057,
+    "campus_lng": -104.6969
+  },
+  {
+    "name": "Utah State University",
+    "party_score": 5.5,
+    "tier": 2,
+    "campus_lat": 41.7457,
+    "campus_lng": -111.8097
+  },
+  {
+    "name": "University of New Mexico",
+    "party_score": 5.5,
+    "tier": 2,
+    "campus_lat": 35.0844,
+    "campus_lng": -106.6189
+  },
+  {
+    "name": "New Mexico State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 32.2807,
+    "campus_lng": -106.7478
+  },
+  {
+    "name": "University of Texas at Arlington",
+    "party_score": 5.5,
+    "tier": 2,
+    "campus_lat": 32.73,
+    "campus_lng": -97.113
+  },
+  {
+    "name": "Tarleton State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 32.2174,
+    "campus_lng": -98.2084
+  },
+  {
+    "name": "West Texas A&M University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 34.9749,
+    "campus_lng": -101.913
+  },
+  {
+    "name": "Western Washington University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 48.7337,
+    "campus_lng": -122.4867
+  },
+  {
+    "name": "Central Washington University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 46.9965,
+    "campus_lng": -120.5429
+  },
+  {
+    "name": "Eastern Washington University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 47.4886,
+    "campus_lng": -117.5831
+  },
+  {
+    "name": "Hampton University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 37.0199,
+    "campus_lng": -76.3379
+  },
+  {
+    "name": "Morehouse College",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 33.7475,
+    "campus_lng": -84.4132
+  },
+  {
+    "name": "Clark Atlanta University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 33.7533,
+    "campus_lng": -84.4141
+  },
+  {
+    "name": "Morgan State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 39.3438,
+    "campus_lng": -76.5836
+  },
+  {
+    "name": "Jackson State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 32.2969,
+    "campus_lng": -90.2094
+  },
+  {
+    "name": "Tennessee State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 36.1685,
+    "campus_lng": -86.832
+  },
+  {
+    "name": "Norfolk State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 36.8477,
+    "campus_lng": -76.2691
+  },
+  {
+    "name": "Prairie View A&M University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 30.0892,
+    "campus_lng": -95.9876
+  },
+  {
+    "name": "Bethune-Cookman University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 29.2034,
+    "campus_lng": -81.0236
+  },
+  {
+    "name": "Delaware State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 39.1868,
+    "campus_lng": -75.5414
+  },
+  {
+    "name": "Alcorn State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 31.8766,
+    "campus_lng": -91.1352
+  },
+  {
+    "name": "Alabama State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 32.3637,
+    "campus_lng": -86.2968
+  },
+  {
+    "name": "South Carolina State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 33.4957,
+    "campus_lng": -80.8499
+  },
+  {
+    "name": "Winston-Salem State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 36.0977,
+    "campus_lng": -80.2231
+  },
+  {
+    "name": "Bowie State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 39.0002,
+    "campus_lng": -76.748
+  },
+  {
+    "name": "University of Louisiana at Monroe",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 32.5287,
+    "campus_lng": -92.0682
+  },
+  {
+    "name": "Louisiana Tech University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 32.5287,
+    "campus_lng": -92.6461
+  },
+  {
+    "name": "McNeese State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 30.2069,
+    "campus_lng": -93.2191
+  },
+  {
+    "name": "Northwestern State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 31.7613,
+    "campus_lng": -93.0969
+  },
+  {
+    "name": "Nicholls State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 29.7948,
+    "campus_lng": -90.8223
+  },
+  {
+    "name": "Arkansas State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 35.8419,
+    "campus_lng": -90.6767
+  },
+  {
+    "name": "University of Central Arkansas",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 35.0756,
+    "campus_lng": -92.4473
+  },
+  {
+    "name": "East Tennessee State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 36.3018,
+    "campus_lng": -82.368
+  },
+  {
+    "name": "Austin Peay State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 36.5375,
+    "campus_lng": -87.3595
+  },
+  {
+    "name": "University of Tennessee at Chattanooga",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 35.0485,
+    "campus_lng": -85.3008
+  },
+  {
+    "name": "Murray State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 36.6167,
+    "campus_lng": -88.3199
+  },
+  {
+    "name": "Morehead State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 38.1867,
+    "campus_lng": -83.4338
+  },
+  {
+    "name": "Northern Kentucky University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 39.0309,
+    "campus_lng": -84.4631
+  },
+  {
+    "name": "Montclair State University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 40.8629,
+    "campus_lng": -74.1993
+  },
+  {
+    "name": "Stockton University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 39.4808,
+    "campus_lng": -74.5529
+  },
+  {
+    "name": "Monmouth University",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 40.2774,
+    "campus_lng": -74.0047
+  },
+  {
+    "name": "University of New Orleans",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 30.0282,
+    "campus_lng": -90.0659
+  },
+  {
+    "name": "Loyola University New Orleans",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 29.9351,
+    "campus_lng": -90.1223
+  },
+  {
+    "name": "Northeastern University Boston",
+    "party_score": 5.5,
+    "tier": 2,
+    "campus_lat": 42.3398,
+    "campus_lng": -71.0892
+  },
+  {
+    "name": "University of Southern Indiana",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 38.0061,
+    "campus_lng": -87.6769
+  },
+  {
+    "name": "Wofford College Spartanburg",
+    "party_score": 5.5,
+    "tier": 1,
+    "campus_lat": 34.9594,
+    "campus_lng": -81.9291
+  },
+  {
     "name": "High Point University",
     "party_score": 5.45,
     "tier": 2,
@@ -679,6 +1904,13 @@
     "campus_lng": -117.0145
   },
   {
+    "name": "Stony Brook University",
+    "party_score": 5.2,
+    "tier": 2,
+    "campus_lat": 40.9126,
+    "campus_lng": -73.1234
+  },
+  {
     "name": "University of Montana",
     "party_score": 5.15,
     "tier": 2,
@@ -691,6 +1923,13 @@
     "tier": 2,
     "campus_lat": 44.8986,
     "campus_lng": -68.6719
+  },
+  {
+    "name": "University of Nevada Reno",
+    "party_score": 5.08,
+    "tier": 2,
+    "campus_lat": 39.5432,
+    "campus_lng": -119.8159
   },
   {
     "name": "Northern Arizona University",
@@ -714,11 +1953,424 @@
     "campus_lng": -97.0785
   },
   {
-    "name": "University of Nevada Reno",
-    "party_score": 5.08,
+    "name": "SUNY Geneseo",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 42.7956,
+    "campus_lng": -77.8186
+  },
+  {
+    "name": "Niagara University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 43.138,
+    "campus_lng": -79.0344
+  },
+  {
+    "name": "Canisius College",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 42.9398,
+    "campus_lng": -78.8385
+  },
+  {
+    "name": "Manhattan College",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 40.8893,
+    "campus_lng": -73.9017
+  },
+  {
+    "name": "St. John's University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 40.7234,
+    "campus_lng": -73.7954
+  },
+  {
+    "name": "Clarkson University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 44.6633,
+    "campus_lng": -75.0044
+  },
+  {
+    "name": "California State Polytechnic University Pomona",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 34.0565,
+    "campus_lng": -117.8215
+  },
+  {
+    "name": "California State University San Bernardino",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 34.1818,
+    "campus_lng": -117.3233
+  },
+  {
+    "name": "California State University Monterey Bay",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 36.6538,
+    "campus_lng": -121.8044
+  },
+  {
+    "name": "Duquesne University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 40.4356,
+    "campus_lng": -79.9914
+  },
+  {
+    "name": "University of Hartford",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 41.8003,
+    "campus_lng": -72.73
+  },
+  {
+    "name": "Sacred Heart University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 41.2112,
+    "campus_lng": -73.237
+  },
+  {
+    "name": "University of Massachusetts Lowell",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 42.6535,
+    "campus_lng": -71.3245
+  },
+  {
+    "name": "Auburn University at Montgomery",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 32.3706,
+    "campus_lng": -86.1777
+  },
+  {
+    "name": "University of South Carolina Upstate",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 34.9253,
+    "campus_lng": -81.9834
+  },
+  {
+    "name": "Winthrop University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 34.9365,
+    "campus_lng": -81.0312
+  },
+  {
+    "name": "George Mason University",
+    "party_score": 5,
     "tier": 2,
-    "campus_lat": 39.5432,
-    "campus_lng": -119.8159
+    "campus_lat": 38.8316,
+    "campus_lng": -77.3081
+  },
+  {
+    "name": "University of Mary Washington",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 38.3019,
+    "campus_lng": -77.471
+  },
+  {
+    "name": "University of West Florida",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 30.5475,
+    "campus_lng": -87.2186
+  },
+  {
+    "name": "Drake University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 41.605,
+    "campus_lng": -93.6533
+  },
+  {
+    "name": "University of Illinois Chicago",
+    "party_score": 5,
+    "tier": 2,
+    "campus_lat": 41.8714,
+    "campus_lng": -87.649
+  },
+  {
+    "name": "DePaul University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 41.9253,
+    "campus_lng": -87.6563
+  },
+  {
+    "name": "Wright State University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 39.7813,
+    "campus_lng": -84.0625
+  },
+  {
+    "name": "Youngstown State University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 41.106,
+    "campus_lng": -80.6471
+  },
+  {
+    "name": "Cleveland State University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 41.5025,
+    "campus_lng": -81.6746
+  },
+  {
+    "name": "Indiana University-Purdue University Indianapolis",
+    "party_score": 5,
+    "tier": 2,
+    "campus_lat": 39.774,
+    "campus_lng": -86.1753
+  },
+  {
+    "name": "Michigan Technological University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 47.1195,
+    "campus_lng": -88.5491
+  },
+  {
+    "name": "Wayne State University",
+    "party_score": 5,
+    "tier": 2,
+    "campus_lat": 42.3573,
+    "campus_lng": -83.0672
+  },
+  {
+    "name": "University of Missouri-Kansas City",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 39.0327,
+    "campus_lng": -94.5766
+  },
+  {
+    "name": "Missouri University of Science and Technology",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 37.9549,
+    "campus_lng": -91.7738
+  },
+  {
+    "name": "Truman State University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 40.1883,
+    "campus_lng": -92.582
+  },
+  {
+    "name": "Wichita State University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 37.7185,
+    "campus_lng": -97.2957
+  },
+  {
+    "name": "University of Colorado Denver",
+    "party_score": 5,
+    "tier": 2,
+    "campus_lat": 39.7455,
+    "campus_lng": -105.0082
+  },
+  {
+    "name": "University of Colorado Colorado Springs",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 38.8939,
+    "campus_lng": -104.8004
+  },
+  {
+    "name": "Weber State University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 41.193,
+    "campus_lng": -111.9474
+  },
+  {
+    "name": "Southern Utah University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 37.6772,
+    "campus_lng": -113.0625
+  },
+  {
+    "name": "University of Texas at El Paso",
+    "party_score": 5,
+    "tier": 2,
+    "campus_lat": 31.7699,
+    "campus_lng": -106.505
+  },
+  {
+    "name": "Lamar University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 30.0513,
+    "campus_lng": -94.0531
+  },
+  {
+    "name": "Portland State University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 45.5115,
+    "campus_lng": -122.686
+  },
+  {
+    "name": "Southern Oregon University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 42.3332,
+    "campus_lng": -122.8537
+  },
+  {
+    "name": "Tuskegee University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 32.4304,
+    "campus_lng": -85.7075
+  },
+  {
+    "name": "Elizabeth City State University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 36.2938,
+    "campus_lng": -76.2211
+  },
+  {
+    "name": "Mississippi Valley State University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 33.5073,
+    "campus_lng": -90.3079
+  },
+  {
+    "name": "Delta State University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 33.7454,
+    "campus_lng": -90.7324
+  },
+  {
+    "name": "Henderson State University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 34.127,
+    "campus_lng": -93.0582
+  },
+  {
+    "name": "Shepherd University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 39.4378,
+    "campus_lng": -77.8055
+  },
+  {
+    "name": "Fairmont State University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 39.4816,
+    "campus_lng": -80.1373
+  },
+  {
+    "name": "Concord University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 37.4171,
+    "campus_lng": -81.0009
+  },
+  {
+    "name": "The College of New Jersey",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 40.268,
+    "campus_lng": -74.7781
+  },
+  {
+    "name": "Rider University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 40.2818,
+    "campus_lng": -74.7453
+  },
+  {
+    "name": "Ramapo College",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 41.0819,
+    "campus_lng": -74.1773
+  },
+  {
+    "name": "William Paterson University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 40.9521,
+    "campus_lng": -74.2012
+  },
+  {
+    "name": "Kean University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 40.681,
+    "campus_lng": -74.2346
+  },
+  {
+    "name": "University of Texas Rio Grande Valley",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 26.3057,
+    "campus_lng": -98.1743
+  },
+  {
+    "name": "Wentworth Institute of Technology",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 42.337,
+    "campus_lng": -71.0955
+  },
+  {
+    "name": "Iona University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 40.92,
+    "campus_lng": -73.7866
+  },
+  {
+    "name": "Catholic University of America",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 38.9346,
+    "campus_lng": -76.9976
+  },
+  {
+    "name": "University of South Carolina Beaufort",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 32.3411,
+    "campus_lng": -80.6825
+  },
+  {
+    "name": "Francis Marion University",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 34.2005,
+    "campus_lng": -79.6693
+  },
+  {
+    "name": "The Citadel",
+    "party_score": 5,
+    "tier": 1,
+    "campus_lat": 32.7979,
+    "campus_lng": -79.958
   },
   {
     "name": "Massachusetts Institute of Technology",
@@ -749,6 +2401,13 @@
     "campus_lng": -95.4018
   },
   {
+    "name": "University of Denver",
+    "party_score": 4.88,
+    "tier": 1,
+    "campus_lat": 39.6772,
+    "campus_lng": -104.9613
+  },
+  {
     "name": "Georgetown University",
     "party_score": 4.85,
     "tier": 1,
@@ -763,6 +2422,13 @@
     "campus_lng": -84.326
   },
   {
+    "name": "Chapman University",
+    "party_score": 4.83,
+    "tier": 1,
+    "campus_lat": 33.793,
+    "campus_lng": -117.8517
+  },
+  {
     "name": "Vanderbilt University",
     "party_score": 4.8,
     "tier": 1,
@@ -770,11 +2436,32 @@
     "campus_lng": -86.8027
   },
   {
+    "name": "SUNY Purchase",
+    "party_score": 4.8,
+    "tier": 1,
+    "campus_lat": 41.0468,
+    "campus_lng": -73.6966
+  },
+  {
+    "name": "California State University San Marcos",
+    "party_score": 4.8,
+    "tier": 1,
+    "campus_lat": 33.1284,
+    "campus_lng": -117.1598
+  },
+  {
     "name": "Duke University",
     "party_score": 4.78,
     "tier": 1,
     "campus_lat": 36.0014,
     "campus_lng": -78.9382
+  },
+  {
+    "name": "Pepperdine University",
+    "party_score": 4.78,
+    "tier": 1,
+    "campus_lat": 34.0369,
+    "campus_lng": -118.7091
   },
   {
     "name": "Johns Hopkins University",
@@ -791,6 +2478,13 @@
     "campus_lng": -87.6753
   },
   {
+    "name": "Southern Methodist University",
+    "party_score": 4.73,
+    "tier": 1,
+    "campus_lat": 32.8421,
+    "campus_lng": -96.7849
+  },
+  {
     "name": "University of Notre Dame",
     "party_score": 4.7,
     "tier": 1,
@@ -803,6 +2497,13 @@
     "tier": 1,
     "campus_lat": 36.1348,
     "campus_lng": -80.278
+  },
+  {
+    "name": "Texas Christian University",
+    "party_score": 4.68,
+    "tier": 1,
+    "campus_lat": 32.7098,
+    "campus_lng": -97.3628
   },
   {
     "name": "Boston University",
@@ -854,11 +2555,291 @@
     "campus_lng": -81.6087
   },
   {
+    "name": "Le Moyne College",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 43.038,
+    "campus_lng": -76.076
+  },
+  {
+    "name": "Pace University",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 41.1792,
+    "campus_lng": -73.8234
+  },
+  {
+    "name": "Wagner College",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 40.6157,
+    "campus_lng": -74.0963
+  },
+  {
+    "name": "California State University Bakersfield",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 35.3508,
+    "campus_lng": -119.1016
+  },
+  {
+    "name": "California State University Stanislaus",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 37.5241,
+    "campus_lng": -120.8576
+  },
+  {
+    "name": "California State University East Bay",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 37.6563,
+    "campus_lng": -122.0568
+  },
+  {
+    "name": "California State University Channel Islands",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 34.1623,
+    "campus_lng": -119.0442
+  },
+  {
+    "name": "California State University Dominguez Hills",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 33.8634,
+    "campus_lng": -118.2553
+  },
+  {
+    "name": "California State University Los Angeles",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 34.0666,
+    "campus_lng": -118.1685
+  },
+  {
+    "name": "University of California Merced",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 37.366,
+    "campus_lng": -120.4248
+  },
+  {
+    "name": "University of Southern Maine",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 43.651,
+    "campus_lng": -70.289
+  },
+  {
+    "name": "University of Massachusetts Boston",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 42.3132,
+    "campus_lng": -71.0376
+  },
+  {
+    "name": "Southern New Hampshire University",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 42.9605,
+    "campus_lng": -71.4526
+  },
+  {
+    "name": "University of Alabama in Huntsville",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 34.7254,
+    "campus_lng": -86.6397
+  },
+  {
+    "name": "Samford University",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 33.4639,
+    "campus_lng": -86.7925
+  },
+  {
+    "name": "Mercer University",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 32.8293,
+    "campus_lng": -83.6502
+  },
+  {
+    "name": "Jacksonville University",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 30.3533,
+    "campus_lng": -81.6029
+  },
+  {
+    "name": "Valparaiso University",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 41.4606,
+    "campus_lng": -87.0426
+  },
+  {
+    "name": "University of Evansville",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 37.9718,
+    "campus_lng": -87.5309
+  },
+  {
+    "name": "Colorado School of Mines",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 39.7514,
+    "campus_lng": -105.2228
+  },
+  {
+    "name": "University of Texas at Dallas",
+    "party_score": 4.5,
+    "tier": 2,
+    "campus_lat": 32.9863,
+    "campus_lng": -96.75
+  },
+  {
+    "name": "Trinity University San Antonio",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 29.4612,
+    "campus_lng": -98.4836
+  },
+  {
+    "name": "St. Edward's University",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 30.2297,
+    "campus_lng": -97.7556
+  },
+  {
+    "name": "Seattle University",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 47.6101,
+    "campus_lng": -122.3194
+  },
+  {
+    "name": "University of Portland",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 45.5718,
+    "campus_lng": -122.7262
+  },
+  {
+    "name": "University of Alaska Fairbanks",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 64.8581,
+    "campus_lng": -147.838
+  },
+  {
+    "name": "University of Alaska Anchorage",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 61.1894,
+    "campus_lng": -149.8214
+  },
+  {
+    "name": "Fisk University",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 36.1676,
+    "campus_lng": -86.8024
+  },
+  {
+    "name": "Xavier University of Louisiana",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 29.9657,
+    "campus_lng": -90.1073
+  },
+  {
+    "name": "Belmont University",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 36.1318,
+    "campus_lng": -86.7932
+  },
+  {
+    "name": "University of Maryland Baltimore County",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 39.2554,
+    "campus_lng": -76.7131
+  },
+  {
+    "name": "New Jersey Institute of Technology",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 40.742,
+    "campus_lng": -74.1789
+  },
+  {
+    "name": "Suffolk University",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 42.3588,
+    "campus_lng": -71.0623
+  },
+  {
+    "name": "Emerson College",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 42.3521,
+    "campus_lng": -71.0668
+  },
+  {
+    "name": "University of Bridgeport",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 41.1731,
+    "campus_lng": -73.1832
+  },
+  {
+    "name": "Fairleigh Dickinson University",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 40.9215,
+    "campus_lng": -74.1179
+  },
+  {
+    "name": "Long Island University",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 40.6881,
+    "campus_lng": -73.9794
+  },
+  {
+    "name": "University of Hawaii at Hilo",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 19.701,
+    "campus_lng": -155.0783
+  },
+  {
+    "name": "Charleston Southern University",
+    "party_score": 4.5,
+    "tier": 1,
+    "campus_lat": 32.9696,
+    "campus_lng": -80.0573
+  },
+  {
     "name": "George Washington University",
     "party_score": 4.48,
     "tier": 1,
     "campus_lat": 38.8997,
     "campus_lng": -77.0488
+  },
+  {
+    "name": "Worcester Polytechnic Institute",
+    "party_score": 4.48,
+    "tier": 1,
+    "campus_lat": 42.2746,
+    "campus_lng": -71.8063
   },
   {
     "name": "Northeastern University",
@@ -882,6 +2863,13 @@
     "campus_lng": -122.2585
   },
   {
+    "name": "Stevens Institute of Technology",
+    "party_score": 4.4,
+    "tier": 1,
+    "campus_lat": 40.7448,
+    "campus_lng": -74.0245
+  },
+  {
     "name": "University of California San Diego",
     "party_score": 4.38,
     "tier": 1,
@@ -894,6 +2882,13 @@
     "tier": 1,
     "campus_lat": 38.5382,
     "campus_lng": -121.7617
+  },
+  {
+    "name": "Drexel University",
+    "party_score": 4.35,
+    "tier": 1,
+    "campus_lat": 39.9566,
+    "campus_lng": -75.1899
   },
   {
     "name": "University of California Irvine",
@@ -910,6 +2905,13 @@
     "campus_lng": -84.3963
   },
   {
+    "name": "Illinois Institute of Technology",
+    "party_score": 4.3,
+    "tier": 1,
+    "campus_lat": 41.8349,
+    "campus_lng": -87.627
+  },
+  {
     "name": "University of Chicago",
     "party_score": 4.28,
     "tier": 1,
@@ -922,6 +2924,13 @@
     "tier": 1,
     "campus_lat": 38.6488,
     "campus_lng": -90.3108
+  },
+  {
+    "name": "Rochester Institute of Technology",
+    "party_score": 4.25,
+    "tier": 1,
+    "campus_lat": 43.0846,
+    "campus_lng": -77.6744
   },
   {
     "name": "Columbia University",
@@ -938,6 +2947,13 @@
     "campus_lng": -75.1932
   },
   {
+    "name": "Creighton University",
+    "party_score": 4.2,
+    "tier": 1,
+    "campus_lat": 41.2646,
+    "campus_lng": -95.9453
+  },
+  {
     "name": "Brown University",
     "party_score": 4.18,
     "tier": 1,
@@ -950,6 +2966,13 @@
     "tier": 1,
     "campus_lat": 43.7044,
     "campus_lng": -72.2887
+  },
+  {
+    "name": "Marquette University",
+    "party_score": 4.15,
+    "tier": 1,
+    "campus_lat": 43.0387,
+    "campus_lng": -87.9299
   },
   {
     "name": "Cornell University",
@@ -966,6 +2989,13 @@
     "campus_lng": -72.9223
   },
   {
+    "name": "Loyola University Chicago",
+    "party_score": 4.1,
+    "tier": 1,
+    "campus_lat": 41.9998,
+    "campus_lng": -87.6589
+  },
+  {
     "name": "Harvard University",
     "party_score": 4.08,
     "tier": 1,
@@ -978,6 +3008,13 @@
     "tier": 1,
     "campus_lat": 40.344,
     "campus_lng": -74.6514
+  },
+  {
+    "name": "Fordham University",
+    "party_score": 4.05,
+    "tier": 1,
+    "campus_lat": 40.8621,
+    "campus_lng": -73.8857
   },
   {
     "name": "Williams College",
@@ -994,6 +3031,55 @@
     "campus_lng": -72.517
   },
   {
+    "name": "American University",
+    "party_score": 4,
+    "tier": 1,
+    "campus_lat": 38.9366,
+    "campus_lng": -77.0874
+  },
+  {
+    "name": "Embry-Riddle Aeronautical University",
+    "party_score": 4,
+    "tier": 1,
+    "campus_lat": 29.1868,
+    "campus_lng": -81.0472
+  },
+  {
+    "name": "Abilene Christian University",
+    "party_score": 4,
+    "tier": 1,
+    "campus_lat": 32.4415,
+    "campus_lng": -99.756
+  },
+  {
+    "name": "Grand Canyon University",
+    "party_score": 4,
+    "tier": 1,
+    "campus_lat": 33.5076,
+    "campus_lng": -112.126
+  },
+  {
+    "name": "Simmons University",
+    "party_score": 4,
+    "tier": 1,
+    "campus_lat": 42.3409,
+    "campus_lng": -71.0987
+  },
+  {
+    "name": "University of the District of Columbia",
+    "party_score": 4,
+    "tier": 1,
+    "campus_lat": 38.9528,
+    "campus_lng": -77.0175
+  },
+  {
+    "name": "Gallaudet University",
+    "party_score": 4,
+    "tier": 1,
+    "campus_lat": 38.9083,
+    "campus_lng": -76.9927
+  },
+  {
     "name": "Pomona College",
     "party_score": 3.98,
     "tier": 1,
@@ -1008,11 +3094,25 @@
     "campus_lng": -75.3575
   },
   {
+    "name": "Clark University",
+    "party_score": 3.95,
+    "tier": 1,
+    "campus_lat": 42.2511,
+    "campus_lng": -71.8231
+  },
+  {
     "name": "Bowdoin College",
     "party_score": 3.93,
     "tier": 1,
     "campus_lat": 43.9065,
     "campus_lng": -69.9633
+  },
+  {
+    "name": "Spelman College",
+    "party_score": 3.93,
+    "tier": 1,
+    "campus_lat": 33.7471,
+    "campus_lng": -84.4127
   },
   {
     "name": "Middlebury College",
@@ -1022,11 +3122,25 @@
     "campus_lng": -73.1772
   },
   {
+    "name": "Drury University",
+    "party_score": 3.9,
+    "tier": 1,
+    "campus_lat": 37.2089,
+    "campus_lng": -93.2791
+  },
+  {
     "name": "Wellesley College",
     "party_score": 3.88,
     "tier": 1,
     "campus_lat": 42.2944,
     "campus_lng": -71.3063
+  },
+  {
+    "name": "University of Redlands",
+    "party_score": 3.88,
+    "tier": 1,
+    "campus_lat": 34.0626,
+    "campus_lng": -117.1637
   },
   {
     "name": "Carleton College",
@@ -1036,11 +3150,25 @@
     "campus_lng": -93.1538
   },
   {
+    "name": "University of Tulsa",
+    "party_score": 3.85,
+    "tier": 1,
+    "campus_lat": 36.151,
+    "campus_lng": -95.9464
+  },
+  {
     "name": "Claremont McKenna College",
     "party_score": 3.83,
     "tier": 1,
     "campus_lat": 34.1012,
     "campus_lng": -117.709
+  },
+  {
+    "name": "Rollins College",
+    "party_score": 3.83,
+    "tier": 1,
+    "campus_lat": 28.5961,
+    "campus_lng": -81.3498
   },
   {
     "name": "Haverford College",
@@ -1050,11 +3178,25 @@
     "campus_lng": -75.3063
   },
   {
+    "name": "Seton Hall University",
+    "party_score": 3.8,
+    "tier": 1,
+    "campus_lat": 40.7423,
+    "campus_lng": -74.2494
+  },
+  {
     "name": "Vassar College",
     "party_score": 3.78,
     "tier": 1,
     "campus_lat": 41.6867,
     "campus_lng": -73.894
+  },
+  {
+    "name": "Stetson University",
+    "party_score": 3.78,
+    "tier": 1,
+    "campus_lat": 29.0388,
+    "campus_lng": -81.301
   },
   {
     "name": "Colby College",
@@ -1064,11 +3206,25 @@
     "campus_lng": -69.6627
   },
   {
+    "name": "St. Louis University",
+    "party_score": 3.75,
+    "tier": 1,
+    "campus_lat": 38.6366,
+    "campus_lng": -90.234
+  },
+  {
     "name": "Hamilton College",
     "party_score": 3.73,
     "tier": 1,
     "campus_lat": 43.0528,
     "campus_lng": -75.4058
+  },
+  {
+    "name": "Hendrix College",
+    "party_score": 3.73,
+    "tier": 1,
+    "campus_lat": 35.0988,
+    "campus_lng": -92.4343
   },
   {
     "name": "Wesleyan University",
@@ -1078,11 +3234,25 @@
     "campus_lng": -72.6559
   },
   {
+    "name": "University of San Francisco",
+    "party_score": 3.7,
+    "tier": 1,
+    "campus_lat": 37.7765,
+    "campus_lng": -122.4506
+  },
+  {
     "name": "Grinnell College",
     "party_score": 3.68,
     "tier": 1,
     "campus_lat": 41.7469,
     "campus_lng": -92.7227
+  },
+  {
+    "name": "Wofford College",
+    "party_score": 3.68,
+    "tier": 1,
+    "campus_lat": 34.9572,
+    "campus_lng": -81.9324
   },
   {
     "name": "Davidson College",
@@ -1092,11 +3262,25 @@
     "campus_lng": -80.8428
   },
   {
+    "name": "Loyola University Maryland",
+    "party_score": 3.65,
+    "tier": 1,
+    "campus_lat": 39.3498,
+    "campus_lng": -76.6267
+  },
+  {
     "name": "Colgate University",
     "party_score": 3.63,
     "tier": 1,
     "campus_lat": 42.8185,
     "campus_lng": -75.5399
+  },
+  {
+    "name": "Millsaps College",
+    "party_score": 3.63,
+    "tier": 1,
+    "campus_lat": 32.321,
+    "campus_lng": -90.1867
   },
   {
     "name": "Bates College",
@@ -1106,11 +3290,25 @@
     "campus_lng": -70.2068
   },
   {
+    "name": "University of Scranton",
+    "party_score": 3.6,
+    "tier": 1,
+    "campus_lat": 41.4074,
+    "campus_lng": -75.6513
+  },
+  {
     "name": "Harvey Mudd College",
     "party_score": 3.58,
     "tier": 1,
     "campus_lat": 34.1063,
     "campus_lng": -117.7106
+  },
+  {
+    "name": "Occidental College",
+    "party_score": 3.58,
+    "tier": 1,
+    "campus_lat": 34.1275,
+    "campus_lng": -118.2114
   },
   {
     "name": "Smith College",
@@ -1120,11 +3318,25 @@
     "campus_lng": -72.6381
   },
   {
+    "name": "Fairfield University",
+    "party_score": 3.55,
+    "tier": 1,
+    "campus_lat": 41.1717,
+    "campus_lng": -73.254
+  },
+  {
     "name": "Oberlin College",
     "party_score": 3.53,
     "tier": 1,
     "campus_lat": 41.2939,
     "campus_lng": -82.2173
+  },
+  {
+    "name": "University of the Pacific",
+    "party_score": 3.53,
+    "tier": 1,
+    "campus_lat": 37.9821,
+    "campus_lng": -121.3109
   },
   {
     "name": "Macalester College",
@@ -1134,11 +3346,25 @@
     "campus_lng": -93.1691
   },
   {
+    "name": "Villanova University",
+    "party_score": 3.5,
+    "tier": 1,
+    "campus_lat": 40.0384,
+    "campus_lng": -75.3448
+  },
+  {
     "name": "Kenyon College",
     "party_score": 3.48,
     "tier": 1,
     "campus_lat": 40.3756,
     "campus_lng": -82.3967
+  },
+  {
+    "name": "Willamette University",
+    "party_score": 3.48,
+    "tier": 1,
+    "campus_lat": 44.9376,
+    "campus_lng": -123.0335
   },
   {
     "name": "Scripps College",
@@ -1148,11 +3374,25 @@
     "campus_lng": -117.7081
   },
   {
+    "name": "Stonehill College",
+    "party_score": 3.45,
+    "tier": 1,
+    "campus_lat": 42.1033,
+    "campus_lng": -71.1088
+  },
+  {
     "name": "Bucknell University",
     "party_score": 3.43,
     "tier": 1,
     "campus_lat": 40.9547,
     "campus_lng": -76.8829
+  },
+  {
+    "name": "Transylvania University",
+    "party_score": 3.43,
+    "tier": 1,
+    "campus_lat": 38.0537,
+    "campus_lng": -84.4974
   },
   {
     "name": "Lafayette College",
@@ -1162,11 +3402,25 @@
     "campus_lng": -75.2123
   },
   {
+    "name": "Bentley University",
+    "party_score": 3.4,
+    "tier": 1,
+    "campus_lat": 42.3874,
+    "campus_lng": -71.2216
+  },
+  {
     "name": "Holy Cross College",
     "party_score": 3.38,
     "tier": 1,
     "campus_lat": 42.2362,
     "campus_lng": -71.8083
+  },
+  {
+    "name": "Birmingham-Southern College",
+    "party_score": 3.38,
+    "tier": 1,
+    "campus_lat": 33.5149,
+    "campus_lng": -86.8728
   },
   {
     "name": "Union College",
@@ -1176,11 +3430,25 @@
     "campus_lng": -73.9291
   },
   {
+    "name": "Babson College",
+    "party_score": 3.35,
+    "tier": 1,
+    "campus_lat": 42.2993,
+    "campus_lng": -71.265
+  },
+  {
     "name": "Trinity College",
     "party_score": 3.33,
     "tier": 1,
     "campus_lat": 41.7472,
     "campus_lng": -72.6907
+  },
+  {
+    "name": "Hampden-Sydney College",
+    "party_score": 3.33,
+    "tier": 1,
+    "campus_lat": 37.2431,
+    "campus_lng": -78.7164
   },
   {
     "name": "Connecticut College",
@@ -1190,6 +3458,13 @@
     "campus_lng": -72.1052
   },
   {
+    "name": "Ithaca College",
+    "party_score": 3.3,
+    "tier": 1,
+    "campus_lat": 42.4231,
+    "campus_lng": -76.4947
+  },
+  {
     "name": "Barnard College",
     "party_score": 3.28,
     "tier": 1,
@@ -1197,11 +3472,25 @@
     "campus_lng": -73.9639
   },
   {
+    "name": "Washington and Lee University",
+    "party_score": 3.28,
+    "tier": 1,
+    "campus_lat": 37.7876,
+    "campus_lng": -79.4428
+  },
+  {
     "name": "Mount Holyoke College",
     "party_score": 3.25,
     "tier": 1,
     "campus_lat": 42.2581,
     "campus_lng": -72.5757
+  },
+  {
+    "name": "St. Olaf College",
+    "party_score": 3.25,
+    "tier": 1,
+    "campus_lat": 44.4621,
+    "campus_lng": -93.1821
   },
   {
     "name": "Bryn Mawr College",
@@ -1218,6 +3507,13 @@
     "campus_lng": -122.63
   },
   {
+    "name": "Luther College",
+    "party_score": 3.2,
+    "tier": 1,
+    "campus_lat": 43.2969,
+    "campus_lng": -91.8013
+  },
+  {
     "name": "Colorado College",
     "party_score": 3.18,
     "tier": 1,
@@ -1230,6 +3526,13 @@
     "tier": 1,
     "campus_lat": 46.0714,
     "campus_lng": -118.3272
+  },
+  {
+    "name": "Augustana College",
+    "party_score": 3.15,
+    "tier": 1,
+    "campus_lat": 41.5053,
+    "campus_lng": -90.5503
   },
   {
     "name": "University of Puget Sound",
@@ -1246,6 +3549,13 @@
     "campus_lng": -122.672
   },
   {
+    "name": "Gustavus Adolphus College",
+    "party_score": 3.1,
+    "tier": 1,
+    "campus_lat": 44.3222,
+    "campus_lng": -93.9728
+  },
+  {
     "name": "Pitzer College",
     "party_score": 3.08,
     "tier": 1,
@@ -1258,6 +3568,13 @@
     "tier": 1,
     "campus_lat": 40.938,
     "campus_lng": -73.8388
+  },
+  {
+    "name": "Wabash College",
+    "party_score": 3.05,
+    "tier": 1,
+    "campus_lat": 39.9574,
+    "campus_lng": -86.9014
   },
   {
     "name": "Skidmore College",
@@ -1274,6 +3591,27 @@
     "campus_lng": -88.0957
   },
   {
+    "name": "Earlham College",
+    "party_score": 3,
+    "tier": 1,
+    "campus_lat": 39.8279,
+    "campus_lng": -84.9027
+  },
+  {
+    "name": "Liberty University",
+    "party_score": 3,
+    "tier": 2,
+    "campus_lat": 37.3529,
+    "campus_lng": -79.1733
+  },
+  {
+    "name": "Brigham Young University",
+    "party_score": 3,
+    "tier": 2,
+    "campus_lat": 40.2518,
+    "campus_lng": -111.6493
+  },
+  {
     "name": "Furman University",
     "party_score": 2.98,
     "tier": 1,
@@ -1288,6 +3626,13 @@
     "campus_lng": -89.987
   },
   {
+    "name": "Beloit College",
+    "party_score": 2.95,
+    "tier": 1,
+    "campus_lat": 42.5071,
+    "campus_lng": -89.0374
+  },
+  {
     "name": "Sewanee University of the South",
     "party_score": 2.93,
     "tier": 1,
@@ -1295,11 +3640,25 @@
     "campus_lng": -85.92
   },
   {
+    "name": "Berry College",
+    "party_score": 2.93,
+    "tier": 1,
+    "campus_lat": 34.2887,
+    "campus_lng": -85.195
+  },
+  {
     "name": "Centre College",
     "party_score": 2.9,
     "tier": 1,
     "campus_lat": 37.6448,
     "campus_lng": -84.7741
+  },
+  {
+    "name": "Knox College",
+    "party_score": 2.9,
+    "tier": 1,
+    "campus_lat": 40.9464,
+    "campus_lng": -90.3712
   },
   {
     "name": "DePauw University",
@@ -1316,6 +3675,13 @@
     "campus_lng": -82.5253
   },
   {
+    "name": "Lake Forest College",
+    "party_score": 2.85,
+    "tier": 1,
+    "campus_lat": 42.2508,
+    "campus_lng": -87.8413
+  },
+  {
     "name": "Dickinson College",
     "party_score": 2.83,
     "tier": 1,
@@ -1328,6 +3694,13 @@
     "tier": 1,
     "campus_lat": 40.0449,
     "campus_lng": -76.31
+  },
+  {
+    "name": "Kalamazoo College",
+    "party_score": 2.8,
+    "tier": 1,
+    "campus_lat": 42.2903,
+    "campus_lng": -85.5986
   },
   {
     "name": "Gettysburg College",
@@ -1344,6 +3717,13 @@
     "campus_lng": -75.5109
   },
   {
+    "name": "Hope College",
+    "party_score": 2.75,
+    "tier": 1,
+    "campus_lat": 42.7876,
+    "campus_lng": -86.1039
+  },
+  {
     "name": "Ursinus College",
     "party_score": 2.73,
     "tier": 1,
@@ -1358,402 +3738,10 @@
     "campus_lng": -80.1467
   },
   {
-    "name": "Worcester Polytechnic Institute",
-    "party_score": 4.48,
-    "tier": 1,
-    "campus_lat": 42.2746,
-    "campus_lng": -71.8063
-  },
-  {
-    "name": "Stevens Institute of Technology",
-    "party_score": 4.4,
-    "tier": 1,
-    "campus_lat": 40.7448,
-    "campus_lng": -74.0245
-  },
-  {
-    "name": "Drexel University",
-    "party_score": 4.35,
-    "tier": 1,
-    "campus_lat": 39.9566,
-    "campus_lng": -75.1899
-  },
-  {
-    "name": "Illinois Institute of Technology",
-    "party_score": 4.3,
-    "tier": 1,
-    "campus_lat": 41.8349,
-    "campus_lng": -87.627
-  },
-  {
-    "name": "Rochester Institute of Technology",
-    "party_score": 4.25,
-    "tier": 1,
-    "campus_lat": 43.0846,
-    "campus_lng": -77.6744
-  },
-  {
-    "name": "Creighton University",
-    "party_score": 4.2,
-    "tier": 1,
-    "campus_lat": 41.2646,
-    "campus_lng": -95.9453
-  },
-  {
-    "name": "Marquette University",
-    "party_score": 4.15,
-    "tier": 1,
-    "campus_lat": 43.0387,
-    "campus_lng": -87.9299
-  },
-  {
-    "name": "Loyola University Chicago",
-    "party_score": 4.1,
-    "tier": 1,
-    "campus_lat": 41.9998,
-    "campus_lng": -87.6589
-  },
-  {
-    "name": "Fordham University",
-    "party_score": 4.05,
-    "tier": 1,
-    "campus_lat": 40.8621,
-    "campus_lng": -73.8857
-  },
-  {
-    "name": "American University",
-    "party_score": 4,
-    "tier": 1,
-    "campus_lat": 38.9366,
-    "campus_lng": -77.0874
-  },
-  {
-    "name": "Clark University",
-    "party_score": 3.95,
-    "tier": 1,
-    "campus_lat": 42.2511,
-    "campus_lng": -71.8231
-  },
-  {
-    "name": "Drury University",
-    "party_score": 3.9,
-    "tier": 1,
-    "campus_lat": 37.2089,
-    "campus_lng": -93.2791
-  },
-  {
-    "name": "University of Tulsa",
-    "party_score": 3.85,
-    "tier": 1,
-    "campus_lat": 36.151,
-    "campus_lng": -95.9464
-  },
-  {
-    "name": "Seton Hall University",
-    "party_score": 3.8,
-    "tier": 1,
-    "campus_lat": 40.7423,
-    "campus_lng": -74.2494
-  },
-  {
-    "name": "St. Louis University",
-    "party_score": 3.75,
-    "tier": 1,
-    "campus_lat": 38.6366,
-    "campus_lng": -90.234
-  },
-  {
-    "name": "University of San Francisco",
-    "party_score": 3.7,
-    "tier": 1,
-    "campus_lat": 37.7765,
-    "campus_lng": -122.4506
-  },
-  {
-    "name": "Loyola University Maryland",
-    "party_score": 3.65,
-    "tier": 1,
-    "campus_lat": 39.3498,
-    "campus_lng": -76.6267
-  },
-  {
-    "name": "University of Scranton",
-    "party_score": 3.6,
-    "tier": 1,
-    "campus_lat": 41.4074,
-    "campus_lng": -75.6513
-  },
-  {
-    "name": "Fairfield University",
-    "party_score": 3.55,
-    "tier": 1,
-    "campus_lat": 41.1717,
-    "campus_lng": -73.254
-  },
-  {
-    "name": "Villanova University",
-    "party_score": 3.5,
-    "tier": 1,
-    "campus_lat": 40.0384,
-    "campus_lng": -75.3448
-  },
-  {
-    "name": "Stonehill College",
-    "party_score": 3.45,
-    "tier": 1,
-    "campus_lat": 42.1033,
-    "campus_lng": -71.1088
-  },
-  {
-    "name": "Bentley University",
-    "party_score": 3.4,
-    "tier": 1,
-    "campus_lat": 42.3874,
-    "campus_lng": -71.2216
-  },
-  {
-    "name": "Babson College",
-    "party_score": 3.35,
-    "tier": 1,
-    "campus_lat": 42.2993,
-    "campus_lng": -71.265
-  },
-  {
-    "name": "Ithaca College",
-    "party_score": 3.3,
-    "tier": 1,
-    "campus_lat": 42.4231,
-    "campus_lng": -76.4947
-  },
-  {
-    "name": "St. Olaf College",
-    "party_score": 3.25,
-    "tier": 1,
-    "campus_lat": 44.4621,
-    "campus_lng": -93.1821
-  },
-  {
-    "name": "Luther College",
-    "party_score": 3.2,
-    "tier": 1,
-    "campus_lat": 43.2969,
-    "campus_lng": -91.8013
-  },
-  {
-    "name": "Augustana College",
-    "party_score": 3.15,
-    "tier": 1,
-    "campus_lat": 41.5053,
-    "campus_lng": -90.5503
-  },
-  {
-    "name": "Gustavus Adolphus College",
-    "party_score": 3.1,
-    "tier": 1,
-    "campus_lat": 44.3222,
-    "campus_lng": -93.9728
-  },
-  {
-    "name": "Wabash College",
-    "party_score": 3.05,
-    "tier": 1,
-    "campus_lat": 39.9574,
-    "campus_lng": -86.9014
-  },
-  {
-    "name": "Earlham College",
-    "party_score": 3,
-    "tier": 1,
-    "campus_lat": 39.8279,
-    "campus_lng": -84.9027
-  },
-  {
-    "name": "Beloit College",
-    "party_score": 2.95,
-    "tier": 1,
-    "campus_lat": 42.5071,
-    "campus_lng": -89.0374
-  },
-  {
-    "name": "Knox College",
-    "party_score": 2.9,
-    "tier": 1,
-    "campus_lat": 40.9464,
-    "campus_lng": -90.3712
-  },
-  {
-    "name": "Lake Forest College",
-    "party_score": 2.85,
-    "tier": 1,
-    "campus_lat": 42.2508,
-    "campus_lng": -87.8413
-  },
-  {
-    "name": "Kalamazoo College",
-    "party_score": 2.8,
-    "tier": 1,
-    "campus_lat": 42.2903,
-    "campus_lng": -85.5986
-  },
-  {
-    "name": "Hope College",
-    "party_score": 2.75,
-    "tier": 1,
-    "campus_lat": 42.7876,
-    "campus_lng": -86.1039
-  },
-  {
     "name": "Agnes Scott College",
     "party_score": 2.7,
     "tier": 1,
     "campus_lat": 33.7651,
     "campus_lng": -84.2942
-  },
-  {
-    "name": "Spelman College",
-    "party_score": 3.93,
-    "tier": 1,
-    "campus_lat": 33.7471,
-    "campus_lng": -84.4127
-  },
-  {
-    "name": "University of Denver",
-    "party_score": 4.88,
-    "tier": 1,
-    "campus_lat": 39.6772,
-    "campus_lng": -104.9613
-  },
-  {
-    "name": "Chapman University",
-    "party_score": 4.83,
-    "tier": 1,
-    "campus_lat": 33.793,
-    "campus_lng": -117.8517
-  },
-  {
-    "name": "Pepperdine University",
-    "party_score": 4.78,
-    "tier": 1,
-    "campus_lat": 34.0369,
-    "campus_lng": -118.7091
-  },
-  {
-    "name": "Southern Methodist University",
-    "party_score": 4.73,
-    "tier": 1,
-    "campus_lat": 32.8421,
-    "campus_lng": -96.7849
-  },
-  {
-    "name": "Texas Christian University",
-    "party_score": 4.68,
-    "tier": 1,
-    "campus_lat": 32.7098,
-    "campus_lng": -97.3628
-  },
-  {
-    "name": "University of Redlands",
-    "party_score": 3.88,
-    "tier": 1,
-    "campus_lat": 34.0626,
-    "campus_lng": -117.1637
-  },
-  {
-    "name": "Rollins College",
-    "party_score": 3.83,
-    "tier": 1,
-    "campus_lat": 28.5961,
-    "campus_lng": -81.3498
-  },
-  {
-    "name": "Stetson University",
-    "party_score": 3.78,
-    "tier": 1,
-    "campus_lat": 29.0388,
-    "campus_lng": -81.301
-  },
-  {
-    "name": "Hendrix College",
-    "party_score": 3.73,
-    "tier": 1,
-    "campus_lat": 35.0988,
-    "campus_lng": -92.4343
-  },
-  {
-    "name": "Wofford College",
-    "party_score": 3.68,
-    "tier": 1,
-    "campus_lat": 34.9572,
-    "campus_lng": -81.9324
-  },
-  {
-    "name": "Millsaps College",
-    "party_score": 3.63,
-    "tier": 1,
-    "campus_lat": 32.321,
-    "campus_lng": -90.1867
-  },
-  {
-    "name": "Occidental College",
-    "party_score": 3.58,
-    "tier": 1,
-    "campus_lat": 34.1275,
-    "campus_lng": -118.2114
-  },
-  {
-    "name": "University of the Pacific",
-    "party_score": 3.53,
-    "tier": 1,
-    "campus_lat": 37.9821,
-    "campus_lng": -121.3109
-  },
-  {
-    "name": "Willamette University",
-    "party_score": 3.48,
-    "tier": 1,
-    "campus_lat": 44.9376,
-    "campus_lng": -123.0335
-  },
-  {
-    "name": "Transylvania University",
-    "party_score": 3.43,
-    "tier": 1,
-    "campus_lat": 38.0537,
-    "campus_lng": -84.4974
-  },
-  {
-    "name": "Birmingham-Southern College",
-    "party_score": 3.38,
-    "tier": 1,
-    "campus_lat": 33.5149,
-    "campus_lng": -86.8728
-  },
-  {
-    "name": "Hampden-Sydney College",
-    "party_score": 3.33,
-    "tier": 1,
-    "campus_lat": 37.2431,
-    "campus_lng": -78.7164
-  },
-  {
-    "name": "Washington and Lee University",
-    "party_score": 3.28,
-    "tier": 1,
-    "campus_lat": 37.7876,
-    "campus_lng": -79.4428
-  },
-  {
-    "name": "Berry College",
-    "party_score": 2.93,
-    "tier": 1,
-    "campus_lat": 34.2887,
-    "campus_lng": -85.195
-  },
-  {
-    "name": "University at Buffalo",
-    "party_score": 6.8,
-    "tier": 2,
-    "campus_lat": 43.0008,
-    "campus_lng": -78.789
   }
 ]

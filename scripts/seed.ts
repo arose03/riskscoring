@@ -48,19 +48,19 @@ db.exec(`
 
 // Load JSON
 const raw = fs.readFileSync(JSON_PATH, 'utf-8');
-const universities: { name: string; party_score: number; tier: number }[] = JSON.parse(raw);
+const universities: { name: string; party_score: number; tier: number; campus_lat?: number; campus_lng?: number }[] = JSON.parse(raw);
 
 console.log(`Loaded ${universities.length} universities from JSON`);
 
 // Upsert
 const insert = db.prepare(`
-  INSERT OR REPLACE INTO universities (name, party_score, tier)
-  VALUES (@name, @party_score, @tier)
+  INSERT OR REPLACE INTO universities (name, party_score, tier, campus_lat, campus_lng)
+  VALUES (@name, @party_score, @tier, @campus_lat, @campus_lng)
 `);
 
 const insertMany = db.transaction((unis: typeof universities) => {
   for (const u of unis) {
-    insert.run(u);
+    insert.run({ ...u, campus_lat: u.campus_lat ?? null, campus_lng: u.campus_lng ?? null });
   }
 });
 

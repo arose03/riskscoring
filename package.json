@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npx tsx scripts/seed.ts && next build",
     "start": "next start -p ${PORT:-3000}",
     "lint": "next lint",
     "seed": "npx tsx scripts/seed.ts",

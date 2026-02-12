@@ -17,9 +17,12 @@ export default function RootLayout({
         <header className="bg-[#0f172a] text-white">
           <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="font-bold text-lg tracking-tight">HABGEN</div>
+              <a href="/" className="font-bold text-lg tracking-tight hover:text-slate-200 transition-colors">HABGEN</a>
               <div className="text-slate-400 text-sm">|</div>
-              <div className="text-sm text-slate-300">Risk Scorer</div>
+              <nav className="flex items-center gap-4">
+                <a href="/" className="text-sm text-slate-300 hover:text-white transition-colors">Risk Scorer</a>
+                <a href="/rent-study" className="text-sm text-slate-300 hover:text-white transition-colors">Rent Study</a>
+              </nav>
             </div>
             <div className="text-xs text-slate-500">Habitational Insurance Underwriting</div>
           </div>

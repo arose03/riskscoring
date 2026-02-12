@@ -1,11 +1,38 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
+import { getMarketRentData } from '@/lib/scrapers';
+import { rentRatioToScore } from '@/lib/scoring';
 
 export async function POST(req: NextRequest) {
   const { address, universityName, actualRent, units, occupancy } = await req.json();
 
   if (!address) {
     return NextResponse.json({ error: 'Address is required' }, { status: 400 });
+  }
+
+  // Check for real comp data first
+  if (universityName) {
+    try {
+      const compData = getMarketRentData(universityName);
+      if (compData && compData.compCount > 0 && actualRent) {
+        const actualRentNum = parseFloat(actualRent);
+        if (!isNaN(actualRentNum) && compData.medianRentPerBed > 0) {
+          const ratio = actualRentNum / compData.medianRentPerBed;
+          const score = rentRatioToScore(ratio);
+          return NextResponse.json({
+            score,
+            estimated_market_range_low: Math.round(compData.avgRentPerBed * 0.9),
+            estimated_market_range_high: Math.round(compData.avgRentPerBed * 1.1),
+            confidence: 'high',
+            reasoning: `Based on ${compData.compCount} real comps scraped for ${universityName}. Median market rent: $${compData.medianRentPerBed}/bed/mo. Your rent $${actualRentNum}/bed is ${Math.round(ratio * 100)}% of market.`,
+            source: 'comp_data',
+            compCount: compData.compCount,
+          });
+        }
+      }
+    } catch (e) {
+      console.log('Comp data lookup failed, falling back to AI:', e);
+    }
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;

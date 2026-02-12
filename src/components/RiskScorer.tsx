@@ -591,6 +591,12 @@ export default function RiskScorer() {
           >
             {loadingRent ? 'Estimating...' : 'Estimate Rent vs. Market (AI)'}
           </button>
+          <a
+            href="/rent-study"
+            className="px-4 py-2 text-xs font-medium bg-blue-50 text-blue-700 border border-blue-300 rounded-lg hover:bg-blue-100 transition-colors inline-flex items-center"
+          >
+            Run Rent Comp Study &rarr;
+          </a>
         </div>
       )}
 

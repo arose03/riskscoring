@@ -2,7 +2,7 @@
 // Rent Comp Scraper – Shared Types
 // ============================================================
 
-export type ScraperSource = 'apartments.com' | 'zillow' | 'rentcafe' | 'manual';
+export type ScraperSource = 'apartments.com' | 'zillow' | 'rentcafe' | 'rentcast' | 'manual';
 
 export type UnitType = 'studio' | '1br' | '2br' | '3br' | '4br' | '5br+';
 

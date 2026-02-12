@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
             estimated_market_range_low: Math.round(compData.avgRentPerBed * 0.9),
             estimated_market_range_high: Math.round(compData.avgRentPerBed * 1.1),
             confidence: 'high',
-            reasoning: `Based on ${compData.compCount} real comps scraped for ${universityName}. Median market rent: $${compData.medianRentPerBed}/bed/mo. Your rent $${actualRentNum}/bed is ${Math.round(ratio * 100)}% of market.`,
+            reasoning: `Based on ${compData.compCount} rent comps from RentCast for ${universityName}. Median market rent: $${compData.medianRentPerBed}/bed/mo. Your rent $${actualRentNum}/bed is ${Math.round(ratio * 100)}% of market.`,
             source: 'comp_data',
             compCount: compData.compCount,
           });

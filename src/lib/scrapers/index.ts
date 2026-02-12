@@ -5,9 +5,7 @@
 
 import { getDb } from '../db';
 import { haversineDistance } from '../scoring';
-import { apartmentsScraper } from './apartments';
-import { zillowScraper } from './zillow';
-import { rentcafeScraper } from './rentcafe';
+import { rentcastScraper } from './rentcast';
 import {
   RentScraper,
   ScraperSearchParams,
@@ -19,10 +17,10 @@ import {
   UnitType,
 } from './types';
 
+// RentCast API replaces the old web scrapers (apartments.com, zillow, rentcafe)
+// which were blocked by Cloudflare / bot detection on cloud IPs
 const ALL_SCRAPERS: RentScraper[] = [
-  apartmentsScraper,
-  zillowScraper,
-  rentcafeScraper,
+  rentcastScraper,
 ];
 
 // Run all scrapers concurrently and return combined results

@@ -241,9 +241,73 @@ export default function RiskScorer() {
         formattedAddress: formattedAddress || address,
       }));
 
-      // Auto-calculate distance if university is selected
-      if (selectedUniversity) {
-        fetchDistance(lat, lng, selectedUniversity.id);
+      // Auto-detect nearest university and calculate distance
+      try {
+        const nearestRes = await fetch('/api/nearest-university', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ propertyLat: lat, propertyLng: lng }),
+        });
+        const nearestData = await nearestRes.json();
+
+        if (nearestRes.ok && nearestData.university) {
+          const uni = nearestData.university as University;
+
+          // Auto-select the nearest university
+          setSelectedUniversity(uni);
+          setPropertyInfo((prev) => ({
+            ...prev,
+            universityId: uni.id,
+            universityName: uni.name,
+          }));
+
+          // Auto-score university tier
+          const tierScore = universityTierToScore(uni.tier, uni.party_score);
+          setPropertyScores((prev) => ({
+            ...prev,
+            university_tier: {
+              factorKey: 'university_tier',
+              score: tierScore,
+              source: 'AUTO' as SourceType,
+            },
+          }));
+          setGlScores((prev) => ({
+            ...prev,
+            gl_university_tier: {
+              factorKey: 'gl_university_tier',
+              score: tierScore,
+              source: 'AUTO' as SourceType,
+            },
+          }));
+
+          // Auto-score distance
+          if (nearestData.auto_score) {
+            setPropertyScores((prev) => ({
+              ...prev,
+              distance: {
+                factorKey: 'distance',
+                score: nearestData.auto_score as ScoreValue,
+                source: 'AUTO',
+                aiReasoning: `Distance: ${nearestData.miles} miles from ${uni.name}`,
+              },
+            }));
+            setGlScores((prev) => ({
+              ...prev,
+              gl_distance: {
+                factorKey: 'gl_distance',
+                score: nearestData.auto_score as ScoreValue,
+                source: 'AUTO',
+                aiReasoning: `Distance: ${nearestData.miles} miles from ${uni.name}`,
+              },
+            }));
+          }
+        }
+      } catch (nearestErr) {
+        console.error('Nearest university lookup failed:', nearestErr);
+        // Fall back to manual distance if university already selected
+        if (selectedUniversity) {
+          fetchDistance(lat, lng, selectedUniversity.id);
+        }
       }
 
       // Trigger AI estimates

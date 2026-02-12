@@ -476,9 +476,7 @@ export default function RentStudyPage() {
                           className="text-xs border border-slate-300 rounded px-2 py-1"
                         >
                           <option value="all">All Sources</option>
-                          <option value="apartments.com">Apartments.com</option>
-                          <option value="zillow">Zillow</option>
-                          <option value="rentcafe">RentCafe</option>
+                          <option value="rentcast">RentCast</option>
                           <option value="manual">Manual</option>
                         </select>
                         <select

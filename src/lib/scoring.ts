@@ -348,6 +348,81 @@ export function rentRatioToScore(ratio: number): ScoreValue {
   return 5;
 }
 
+// ----- Property Info → Score Helpers -----
+
+export function constructionToScore(construction: string, yearBuilt?: string): ScoreValue | null {
+  switch (construction) {
+    case 'FR': return 1;
+    case 'NC': return 2;
+    case 'JM': return 3;
+    case 'FRAME': {
+      if (yearBuilt) {
+        const age = new Date().getFullYear() - parseInt(yearBuilt);
+        if (!isNaN(age) && age < 15) return 4;
+      }
+      return 5;
+    }
+    default: return null;
+  }
+}
+
+export function yearBuiltToScore(yearBuilt: string): ScoreValue | null {
+  const year = parseInt(yearBuilt);
+  if (isNaN(year) || year < 1800 || year > new Date().getFullYear()) return null;
+  const age = new Date().getFullYear() - year;
+  if (age < 5) return 1;
+  if (age <= 15) return 2;
+  if (age <= 25) return 3;
+  if (age <= 40) return 4;
+  return 5;
+}
+
+export function storiesToScore(stories: string): ScoreValue | null {
+  const n = parseInt(stories);
+  if (isNaN(n) || n <= 0) return null;
+  if (n <= 2) return 1;
+  if (n <= 4) return 2;
+  if (n <= 7) return 3;
+  if (n <= 12) return 4;
+  return 5;
+}
+
+export function sprinklerToScore(sprinkler: string): ScoreValue | null {
+  if (sprinkler === 'Y') return 2;
+  if (sprinkler === 'N') return 5;
+  return null;
+}
+
+export function occupancyToScore(occupancy: string): ScoreValue | null {
+  switch (occupancy) {
+    case 'senior': return 1;
+    case 'workforce': return 2;
+    case 'graduate': return 3;
+    case 'undergraduate': return 4;
+    case 'greek': return 5;
+    default: return null;
+  }
+}
+
+export function sponsorTierToScore(tier: string): ScoreValue | null {
+  switch (tier) {
+    case 'A': return 1;
+    case 'B': return 2;
+    case 'C': return 3;
+    default: return null;
+  }
+}
+
+export function dscrToScore(dscr: string): ScoreValue | null {
+  const val = parseFloat(dscr);
+  if (isNaN(val) || val <= 0) return null;
+  if (val >= 1.60) return 1;
+  if (val >= 1.40) return 2;
+  if (val >= 1.25) return 3;
+  if (val >= 1.10) return 4;
+  return 5;
+}
+
 // ----- Haversine distance (miles) -----
 export function haversineDistance(
   lat1: number,

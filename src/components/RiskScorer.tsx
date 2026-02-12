@@ -13,6 +13,13 @@ import {
   GL_FACTORS,
   computeScore,
   universityTierToScore,
+  constructionToScore,
+  yearBuiltToScore,
+  storiesToScore,
+  sprinklerToScore,
+  occupancyToScore,
+  sponsorTierToScore,
+  dscrToScore,
 } from '@/lib/scoring';
 import PropertyInfoPanel from './PropertyInfoPanel';
 import ScoringGrid from './ScoringGrid';
@@ -54,38 +61,152 @@ export default function RiskScorer() {
   const [geocodeError, setGeocodeError] = useState('');
   const [loadingCrime, setLoadingCrime] = useState(false);
   const [loadingRent, setLoadingRent] = useState(false);
+  const [universityError, setUniversityError] = useState('');
 
   // Fetch universities on mount
   useEffect(() => {
     fetch('/api/universities')
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
       .then((data) => setUniversities(data))
-      .catch(console.error);
+      .catch((err) => {
+        console.error('Failed to load universities:', err);
+        setUniversityError('Failed to load university list. Check database.');
+      });
   }, []);
 
-  // Auto-score university tier when university is selected
-  const applyUniversityTierScore = useCallback(
-    (university: University) => {
-      const score = universityTierToScore(university.tier, university.party_score);
+  // ─── Auto-score from property info fields ───────────────────────
+  useEffect(() => {
+    const mappings: Array<{
+      propKey: string;
+      glKey?: string;
+      score: ScoreValue | null;
+      reasoning?: string;
+    }> = [
+      {
+        propKey: 'construction',
+        score: constructionToScore(propertyInfo.construction, propertyInfo.yearBuilt),
+        reasoning: propertyInfo.construction
+          ? `Auto-scored from construction type: ${propertyInfo.construction}`
+          : undefined,
+      },
+      {
+        propKey: 'building_age',
+        score: yearBuiltToScore(propertyInfo.yearBuilt),
+        reasoning: propertyInfo.yearBuilt
+          ? `Auto-scored from year built: ${propertyInfo.yearBuilt} (${new Date().getFullYear() - parseInt(propertyInfo.yearBuilt)} yrs old)`
+          : undefined,
+      },
+      {
+        propKey: 'height',
+        score: storiesToScore(propertyInfo.stories),
+        reasoning: propertyInfo.stories
+          ? `Auto-scored from stories: ${propertyInfo.stories}`
+          : undefined,
+      },
+      {
+        propKey: 'sprinkler',
+        score: sprinklerToScore(propertyInfo.sprinkler),
+        reasoning: propertyInfo.sprinkler
+          ? `Auto-scored from sprinkler: ${propertyInfo.sprinkler === 'Y' ? 'Yes' : 'No'}`
+          : undefined,
+      },
+      {
+        propKey: 'occupancy',
+        glKey: 'gl_occupancy',
+        score: occupancyToScore(propertyInfo.occupancy),
+        reasoning: propertyInfo.occupancy
+          ? `Auto-scored from occupancy type: ${propertyInfo.occupancy}`
+          : undefined,
+      },
+      {
+        propKey: 'sponsor',
+        glKey: 'gl_sponsor',
+        score: sponsorTierToScore(propertyInfo.sponsorTier),
+        reasoning: propertyInfo.sponsorTier
+          ? `Auto-scored from sponsor tier: ${propertyInfo.sponsorTier}`
+          : undefined,
+      },
+      {
+        propKey: 'dscr',
+        score: dscrToScore(propertyInfo.dscr),
+        reasoning: propertyInfo.dscr
+          ? `Auto-scored from DSCR: ${propertyInfo.dscr}x`
+          : undefined,
+      },
+    ];
 
-      const newPropertyScores = { ...propertyScores };
-      newPropertyScores['university_tier'] = {
+    setPropertyScores((prev) => {
+      const next = { ...prev };
+      for (const { propKey, score, reasoning } of mappings) {
+        const existing = prev[propKey];
+        if (score !== null && (!existing || existing.source === 'AUTO')) {
+          next[propKey] = {
+            factorKey: propKey,
+            score,
+            source: 'AUTO',
+            aiReasoning: reasoning,
+          };
+        } else if (score === null && existing?.source === 'AUTO') {
+          // Field was cleared — remove the auto score
+          delete next[propKey];
+        }
+      }
+      return next;
+    });
+
+    setGlScores((prev) => {
+      const next = { ...prev };
+      for (const { glKey, score, reasoning } of mappings) {
+        if (!glKey) continue;
+        const existing = prev[glKey];
+        if (score !== null && (!existing || existing.source === 'AUTO')) {
+          next[glKey] = {
+            factorKey: glKey,
+            score,
+            source: 'AUTO',
+            aiReasoning: reasoning,
+          };
+        } else if (score === null && existing?.source === 'AUTO') {
+          delete next[glKey];
+        }
+      }
+      return next;
+    });
+  }, [
+    propertyInfo.construction,
+    propertyInfo.yearBuilt,
+    propertyInfo.stories,
+    propertyInfo.sprinkler,
+    propertyInfo.occupancy,
+    propertyInfo.sponsorTier,
+    propertyInfo.dscr,
+  ]);
+
+  // ─── University tier scoring (functional updaters — no stale closure) ──
+  const applyUniversityTierScore = useCallback((university: University) => {
+    const score = universityTierToScore(university.tier, university.party_score);
+
+    setPropertyScores((prev) => ({
+      ...prev,
+      university_tier: {
         factorKey: 'university_tier',
         score,
         source: 'AUTO' as SourceType,
-      };
-      setPropertyScores(newPropertyScores);
+      },
+    }));
 
-      const newGlScores = { ...glScores };
-      newGlScores['gl_university_tier'] = {
+    setGlScores((prev) => ({
+      ...prev,
+      gl_university_tier: {
         factorKey: 'gl_university_tier',
         score,
         source: 'AUTO' as SourceType,
-      };
-      setGlScores(newGlScores);
-    },
-    [propertyScores, glScores]
-  );
+      },
+    }));
+  }, []);
 
   // Handle university selection
   const handleUniversitySelect = useCallback(
@@ -118,6 +239,7 @@ export default function RiskScorer() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ propertyLat, propertyLng, universityId }),
       });
+      if (!res.ok) return;
       const data = await res.json();
 
       if (data.auto_score) {
@@ -145,20 +267,22 @@ export default function RiskScorer() {
     }
   };
 
-  // Fetch AI crime estimate
-  const fetchCrimeEstimate = async () => {
-    if (!propertyInfo.address) return;
+  // ─── AI estimates — accept explicit params to avoid stale closures ───
+  const fetchCrimeEstimate = async (address: string, universityName: string) => {
+    if (!address) return;
     setLoadingCrime(true);
     try {
       const res = await fetch('/api/estimate/crime', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          address: propertyInfo.formattedAddress || propertyInfo.address,
-          universityName: propertyInfo.universityName,
-        }),
+        body: JSON.stringify({ address, universityName }),
       });
+      if (!res.ok) {
+        console.error('Crime estimate API error:', res.status);
+        return;
+      }
       const data = await res.json();
+      if (!data.score) return;
 
       const crimeScore: FactorScore = {
         factorKey: 'crime',
@@ -179,21 +303,29 @@ export default function RiskScorer() {
     }
   };
 
-  // Fetch AI rent estimate
-  const fetchRentEstimate = async () => {
-    if (!propertyInfo.address) return;
+  const fetchRentEstimate = async (
+    address: string,
+    universityName: string,
+    actualRent?: string
+  ) => {
+    if (!address) return;
     setLoadingRent(true);
     try {
       const res = await fetch('/api/estimate/rent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          address: propertyInfo.formattedAddress || propertyInfo.address,
-          universityName: propertyInfo.universityName,
-          actualRent: propertyInfo.actualRent || undefined,
+          address,
+          universityName,
+          actualRent: actualRent || undefined,
         }),
       });
+      if (!res.ok) {
+        console.error('Rent estimate API error:', res.status);
+        return;
+      }
       const data = await res.json();
+      if (!data.score) return;
 
       const rentScore: FactorScore = {
         factorKey: 'rent_vs_market',
@@ -241,6 +373,10 @@ export default function RiskScorer() {
         formattedAddress: formattedAddress || address,
       }));
 
+      // Track the resolved address & university name for AI estimates
+      const resolvedAddress = formattedAddress || address;
+      let resolvedUniName = '';
+
       // Auto-detect nearest university and calculate distance
       try {
         const nearestRes = await fetch('/api/nearest-university', {
@@ -248,10 +384,13 @@ export default function RiskScorer() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ propertyLat: lat, propertyLng: lng }),
         });
+
+        if (!nearestRes.ok) throw new Error(`HTTP ${nearestRes.status}`);
         const nearestData = await nearestRes.json();
 
-        if (nearestRes.ok && nearestData.university) {
+        if (nearestData.university) {
           const uni = nearestData.university as University;
+          resolvedUniName = uni.name;
 
           // Auto-select the nearest university
           setSelectedUniversity(uni);
@@ -304,17 +443,15 @@ export default function RiskScorer() {
         }
       } catch (nearestErr) {
         console.error('Nearest university lookup failed:', nearestErr);
-        // Fall back to manual distance if university already selected
         if (selectedUniversity) {
+          resolvedUniName = selectedUniversity.name;
           fetchDistance(lat, lng, selectedUniversity.id);
         }
       }
 
-      // Trigger AI estimates
-      setTimeout(() => {
-        fetchCrimeEstimate();
-        fetchRentEstimate();
-      }, 100);
+      // Trigger AI estimates with resolved values — no stale closures
+      fetchCrimeEstimate(resolvedAddress, resolvedUniName);
+      fetchRentEstimate(resolvedAddress, resolvedUniName);
     } catch (err: unknown) {
       console.error('Geocode failed:', err);
       const message = err instanceof Error ? err.message : 'Geocoding failed';
@@ -328,8 +465,6 @@ export default function RiskScorer() {
   const handlePropertyScoreChange = (factorKey: string, score: ScoreValue) => {
     setPropertyScores((prev) => {
       const existing = prev[factorKey];
-      const factor = PROPERTY_FACTORS.find((f) => f.key === factorKey);
-      const isAutoOrAI = factor?.autoType === 'AUTO' || factor?.autoType === 'AI_EST';
       const wasAutoScored = existing && (existing.source === 'AUTO' || existing.source === 'AI_EST');
 
       return {
@@ -337,7 +472,7 @@ export default function RiskScorer() {
         [factorKey]: {
           factorKey,
           score,
-          source: (isAutoOrAI && wasAutoScored ? 'OVERRIDE' : existing?.source || 'MANUAL') as SourceType,
+          source: (wasAutoScored ? 'OVERRIDE' : 'MANUAL') as SourceType,
           originalSource: wasAutoScored ? existing.source : undefined,
           aiReasoning: existing?.aiReasoning,
           aiConfidence: existing?.aiConfidence,
@@ -349,8 +484,6 @@ export default function RiskScorer() {
   const handleGlScoreChange = (factorKey: string, score: ScoreValue) => {
     setGlScores((prev) => {
       const existing = prev[factorKey];
-      const factor = GL_FACTORS.find((f) => f.key === factorKey);
-      const isAutoOrAI = factor?.autoType === 'AUTO' || factor?.autoType === 'AI_EST';
       const wasAutoScored = existing && (existing.source === 'AUTO' || existing.source === 'AI_EST');
 
       return {
@@ -358,7 +491,7 @@ export default function RiskScorer() {
         [factorKey]: {
           factorKey,
           score,
-          source: (isAutoOrAI && wasAutoScored ? 'OVERRIDE' : existing?.source || 'MANUAL') as SourceType,
+          source: (wasAutoScored ? 'OVERRIDE' : 'MANUAL') as SourceType,
           originalSource: wasAutoScored ? existing.source : undefined,
           aiReasoning: existing?.aiReasoning,
           aiConfidence: existing?.aiConfidence,
@@ -399,6 +532,13 @@ export default function RiskScorer() {
         </button>
       </div>
 
+      {/* University error banner */}
+      {universityError && (
+        <div className="mb-4 px-4 py-2 text-xs text-red-700 bg-red-50 border border-red-200 rounded-lg">
+          {universityError}
+        </div>
+      )}
+
       {/* Property Info (shared between tabs) */}
       <div className="mb-6">
         <PropertyInfoPanel
@@ -417,7 +557,12 @@ export default function RiskScorer() {
         <div className="flex gap-3 mb-6">
           <button
             type="button"
-            onClick={fetchCrimeEstimate}
+            onClick={() =>
+              fetchCrimeEstimate(
+                propertyInfo.formattedAddress || propertyInfo.address,
+                propertyInfo.universityName
+              )
+            }
             disabled={loadingCrime}
             className="px-4 py-2 text-xs font-medium bg-amber-50 text-amber-700 border border-amber-300 rounded-lg hover:bg-amber-100 disabled:opacity-50 transition-colors"
           >
@@ -425,7 +570,13 @@ export default function RiskScorer() {
           </button>
           <button
             type="button"
-            onClick={fetchRentEstimate}
+            onClick={() =>
+              fetchRentEstimate(
+                propertyInfo.formattedAddress || propertyInfo.address,
+                propertyInfo.universityName,
+                propertyInfo.actualRent
+              )
+            }
             disabled={loadingRent}
             className="px-4 py-2 text-xs font-medium bg-amber-50 text-amber-700 border border-amber-300 rounded-lg hover:bg-amber-100 disabled:opacity-50 transition-colors"
           >

@@ -42,6 +42,7 @@ interface RentStudySummary {
     maxRentPerBed: number;
   }>;
   bySource: Record<string, number>;
+  errors?: string[];
 }
 
 interface RentStudy {
@@ -499,7 +500,16 @@ export default function RentStudyPage() {
                   {filteredComps.length === 0 ? (
                     <div className="p-8 text-center text-sm text-slate-400">
                       {activeStudy.status === 'scraping' ? 'Scraping in progress...' :
-                       activeStudy.status === 'error' ? 'Scraping encountered errors. Try again or check logs.' :
+                       activeStudy.status === 'error' ? (
+                         <>
+                           Scraping encountered errors.
+                           {activeStudy.summary?.errors && (
+                             <span className="block mt-1 text-red-500 text-xs font-mono">
+                               {(activeStudy.summary.errors as string[]).join('; ')}
+                             </span>
+                           )}
+                         </>
+                       ) :
                        'No comps found. Try a different market or broaden your search.'}
                     </div>
                   ) : (

@@ -201,8 +201,15 @@ export async function createRentStudy(params: {
     })));
 
     const status = allComps.length > 0 ? 'complete' : 'error';
+    const summaryWithErrors = errors.length > 0
+      ? { ...summary, errors }
+      : summary;
     db.prepare('UPDATE rent_studies SET status = ?, summary = ? WHERE id = ?')
-      .run(status, JSON.stringify(summary), studyId);
+      .run(status, JSON.stringify(summaryWithErrors), studyId);
+
+    if (errors.length > 0) {
+      console.error(`[rent-study] Scraper errors for "${params.marketName}":`, errors);
+    }
 
     return getRentStudy(studyId)!;
   } catch (err) {

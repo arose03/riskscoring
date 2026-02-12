@@ -66,6 +66,7 @@ export interface RentStudySummary {
     maxRentPerBed: number;
   }>;
   bySource: Record<string, number>;
+  errors?: string[];
 }
 
 export interface RentStudy {

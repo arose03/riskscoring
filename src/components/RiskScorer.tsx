@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import {
   PropertyInfo,
   University,
@@ -214,49 +214,75 @@ export default function RiskScorer() {
     }
   };
 
-  // Handle geocoding
+  // Load Google Maps JS API for client-side geocoding
+  const geocoderRef = useRef<google.maps.Geocoder | null>(null);
+
+  const loadGoogleMaps = (): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      if (typeof google !== 'undefined' && google.maps) {
+        resolve();
+        return;
+      }
+      const key = process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY;
+      if (!key) {
+        reject(new Error('NEXT_PUBLIC_GOOGLE_MAPS_KEY is not set'));
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${key}`;
+      script.async = true;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error('Failed to load Google Maps'));
+      document.head.appendChild(script);
+    });
+  };
+
+  // Handle geocoding (client-side)
   const handleAddressGeocode = async (address: string) => {
     if (!address) return;
     setLoadingGeocode(true);
     setGeocodeError('');
 
     try {
-      const res = await fetch('/api/geocode', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ address }),
-      });
-      const data = await res.json();
+      await loadGoogleMaps();
 
-      if (!res.ok) {
-        setGeocodeError(data.error || 'Geocoding failed');
+      if (!geocoderRef.current) {
+        geocoderRef.current = new google.maps.Geocoder();
+      }
+
+      const result = await geocoderRef.current.geocode({ address });
+
+      if (!result.results?.length) {
+        setGeocodeError('No results found for this address');
         return;
       }
 
-      if (data.lat && data.lng) {
-        setPropertyInfo((prev) => ({
-          ...prev,
-          lat: data.lat,
-          lng: data.lng,
-          formattedAddress: data.formatted_address || address,
-        }));
+      const place = result.results[0];
+      const lat = place.geometry.location.lat();
+      const lng = place.geometry.location.lng();
+      const formattedAddress = place.formatted_address;
 
-        // Auto-calculate distance if university is selected
-        if (selectedUniversity) {
-          fetchDistance(data.lat, data.lng, selectedUniversity.id);
-        }
+      setPropertyInfo((prev) => ({
+        ...prev,
+        lat,
+        lng,
+        formattedAddress: formattedAddress || address,
+      }));
 
-        // Trigger AI estimates
-        setTimeout(() => {
-          fetchCrimeEstimate();
-          fetchRentEstimate();
-        }, 100);
-      } else {
-        setGeocodeError('No results found for this address');
+      // Auto-calculate distance if university is selected
+      if (selectedUniversity) {
+        fetchDistance(lat, lng, selectedUniversity.id);
       }
-    } catch (err) {
+
+      // Trigger AI estimates
+      setTimeout(() => {
+        fetchCrimeEstimate();
+        fetchRentEstimate();
+      }, 100);
+    } catch (err: unknown) {
       console.error('Geocode failed:', err);
-      setGeocodeError('Network error — check your connection');
+      const message = err instanceof Error ? err.message : 'Geocoding failed';
+      setGeocodeError(message);
     } finally {
       setLoadingGeocode(false);
     }

@@ -214,30 +214,44 @@ export default function RiskScorer() {
     }
   };
 
-  // Load Google Maps JS API for client-side geocoding
+  // Client-side geocoding via Google Maps JS API
   const geocoderRef = useRef<google.maps.Geocoder | null>(null);
 
   const loadGoogleMaps = (): Promise<void> => {
     return new Promise((resolve, reject) => {
-      if (typeof google !== 'undefined' && google.maps) {
+      if (typeof google !== 'undefined' && google.maps?.Geocoder) {
         resolve();
         return;
       }
       const key = process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY;
       if (!key) {
-        reject(new Error('NEXT_PUBLIC_GOOGLE_MAPS_KEY is not set'));
+        reject(new Error('Google Maps key is not configured — set NEXT_PUBLIC_GOOGLE_MAPS_KEY'));
+        return;
+      }
+      // Avoid appending duplicate scripts
+      if (document.querySelector('script[src*="maps.googleapis.com/maps/api/js"]')) {
+        // Script tag exists but hasn't finished — poll for it
+        const start = Date.now();
+        const poll = setInterval(() => {
+          if (typeof google !== 'undefined' && google.maps?.Geocoder) {
+            clearInterval(poll);
+            resolve();
+          } else if (Date.now() - start > 10000) {
+            clearInterval(poll);
+            reject(new Error('Google Maps script timed out'));
+          }
+        }, 200);
         return;
       }
       const script = document.createElement('script');
       script.src = `https://maps.googleapis.com/maps/api/js?key=${key}`;
       script.async = true;
       script.onload = () => resolve();
-      script.onerror = () => reject(new Error('Failed to load Google Maps'));
+      script.onerror = () => reject(new Error('Failed to load Google Maps script'));
       document.head.appendChild(script);
     });
   };
 
-  // Handle geocoding (client-side)
   const handleAddressGeocode = async (address: string) => {
     if (!address) return;
     setLoadingGeocode(true);
@@ -250,17 +264,30 @@ export default function RiskScorer() {
         geocoderRef.current = new google.maps.Geocoder();
       }
 
-      const result = await geocoderRef.current.geocode({ address });
-
-      if (!result.results?.length) {
-        setGeocodeError('No results found for this address');
-        return;
-      }
-
-      const place = result.results[0];
-      const lat = place.geometry.location.lat();
-      const lng = place.geometry.location.lng();
-      const formattedAddress = place.formatted_address;
+      // Use callback API (more reliable than promise API) wrapped in a promise with timeout
+      const { lat, lng, formattedAddress } = await new Promise<{
+        lat: number;
+        lng: number;
+        formattedAddress: string;
+      }>((resolve, reject) => {
+        const timeout = setTimeout(
+          () => reject(new Error('Geocode request timed out after 10s')),
+          10000
+        );
+        geocoderRef.current!.geocode({ address }, (results, status) => {
+          clearTimeout(timeout);
+          if (status === google.maps.GeocoderStatus.OK && results && results.length > 0) {
+            const place = results[0];
+            resolve({
+              lat: place.geometry.location.lat(),
+              lng: place.geometry.location.lng(),
+              formattedAddress: place.formatted_address,
+            });
+          } else {
+            reject(new Error(`Geocode failed: ${status}`));
+          }
+        });
+      });
 
       setPropertyInfo((prev) => ({
         ...prev,

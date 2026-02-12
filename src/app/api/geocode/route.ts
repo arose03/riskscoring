@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+const GOOGLE_SETUP_HINT =
+  'Verify Google key setup: enable Geocoding API, ensure billing is active, and use a server key for GOOGLE_MAPS_API_KEY (IP/app restrictions are okay, HTTP referrer restrictions are not for server calls).';
+
 export async function POST(req: NextRequest) {
   const { address } = await req.json();
 
@@ -10,7 +13,10 @@ export async function POST(req: NextRequest) {
   const apiKey = process.env.GOOGLE_MAPS_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY;
   if (!apiKey) {
     return NextResponse.json(
-      { error: 'GOOGLE_MAPS_API_KEY is not set in environment variables' },
+      {
+        error:
+          'GOOGLE_MAPS_API_KEY is not set in environment variables. Add a server Google Maps key with Geocoding API enabled.',
+      },
       { status: 500 }
     );
   }
@@ -39,26 +45,34 @@ export async function POST(req: NextRequest) {
 
     if (!res.ok) {
       return NextResponse.json(
-        { error: `Google geocoding request failed (${res.status})` },
+        { error: `Google geocoding request failed (${res.status})`, hint: GOOGLE_SETUP_HINT },
         { status: 502 }
       );
     }
 
     data = await res.json();
-  } catch {
+  } catch (error: unknown) {
+    if ((error as { name?: string })?.name === 'AbortError') {
+      return NextResponse.json(
+        { error: 'Google geocoding request timed out after 10s' },
+        { status: 504 }
+      );
+    }
+
     return NextResponse.json(
-      { error: 'Google geocoding request timed out after 10s' },
-      { status: 504 }
+      { error: 'Google geocoding request failed due to a network/runtime error' },
+      { status: 502 }
     );
   } finally {
     clearTimeout(timeout);
   }
 
   if (data.status !== 'OK' || !data.results?.length) {
+    const error = `Geocoding failed: ${data.status}${data.error_message ? ` (${data.error_message})` : ''}`;
+    const includeHint = data.status === 'REQUEST_DENIED' || data.status === 'OVER_DAILY_LIMIT';
+
     return NextResponse.json(
-      {
-        error: `Geocoding failed: ${data.status}${data.error_message ? ` (${data.error_message})` : ''}`,
-      },
+      includeHint ? { error, hint: GOOGLE_SETUP_HINT } : { error },
       { status: 400 }
     );
   }

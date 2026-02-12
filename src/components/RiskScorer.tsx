@@ -311,7 +311,8 @@ export default function RiskScorer() {
         const data = await res.json();
 
         if (!res.ok) {
-          throw new Error(data.error || 'Geocoding failed');
+          const message = [data.error, data.hint].filter(Boolean).join(' ');
+          throw new Error(message || 'Geocoding failed');
         }
 
         lat = data.lat;
@@ -325,10 +326,18 @@ export default function RiskScorer() {
           throw backendErr;
         }
 
-        const fallbackResult = await geocodeViaBrowserFallback(address);
-        lat = fallbackResult.lat;
-        lng = fallbackResult.lng;
-        formattedAddress = fallbackResult.formattedAddress;
+        try {
+          const fallbackResult = await geocodeViaBrowserFallback(address);
+          lat = fallbackResult.lat;
+          lng = fallbackResult.lng;
+          formattedAddress = fallbackResult.formattedAddress;
+        } catch (fallbackErr: unknown) {
+          const fallbackMessage =
+            fallbackErr instanceof Error ? fallbackErr.message : 'Browser geocoding fallback failed';
+          throw new Error(
+            `Backend geocoding failed: ${backendMessage}. Browser fallback failed: ${fallbackMessage}. Please verify your Google Maps key setup.`
+          );
+        }
       }
 
       setPropertyInfo((prev) => ({

@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Risk Scoring App
 
 ## Getting Started
 
-First, run the development server:
+```bash
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+## Google Maps Geocoding Setup (important)
+
+If address lookup fails with `REQUEST_DENIED` or `The provided API key is invalid`, the key configuration is usually the issue.
+
+### 1) Create/choose a Google Cloud project
+- Go to Google Cloud Console.
+- Ensure **Billing** is enabled for the project.
+
+### 2) Enable required API
+- Enable **Geocoding API** for the project.
+
+### 3) Create two keys (recommended)
+
+#### Server key (for backend route `/api/geocode`)
+- Create an API key intended for server usage.
+- Restrict by **API restrictions** to `Geocoding API`.
+- For application restrictions, use **IP restrictions** (or no app restriction while testing).
+- Put this in env as:
+
+```bash
+GOOGLE_MAPS_API_KEY=your_server_key
+```
+
+#### Browser key (optional fallback)
+- Create another API key for browser usage.
+- Restrict by **HTTP referrers** (e.g. `http://localhost:3000/*`, your production domain).
+- Restrict API usage to `Maps JavaScript API` + `Geocoding API`.
+- Put this in env as:
+
+```bash
+NEXT_PUBLIC_GOOGLE_MAPS_KEY=your_browser_key
+```
+
+### 4) Create `.env.local`
+
+```bash
+GOOGLE_MAPS_API_KEY=...
+NEXT_PUBLIC_GOOGLE_MAPS_KEY=...
+```
+
+Then restart the dev server.
+
+### 5) Validate the key directly
+
+Test the server key from terminal:
+
+```bash
+curl "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=$GOOGLE_MAPS_API_KEY"
+```
+
+Expected result should include `"status" : "OK"` and at least one result.
+
+If status is `REQUEST_DENIED`:
+- wrong key
+- Geocoding API not enabled
+- billing not active
+- key restriction type does not match usage (e.g., referrer-restricted key used server-side)
+
+## Scripts
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run lint
+npm run build
+npm run seed
+npm run geocode-campuses
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

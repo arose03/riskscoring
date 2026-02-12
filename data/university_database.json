@@ -1748,5 +1748,12 @@
     "tier": 1,
     "campus_lat": 34.2887,
     "campus_lng": -85.195
+  },
+  {
+    "name": "University at Buffalo",
+    "party_score": 6.8,
+    "tier": 2,
+    "campus_lat": 43.0008,
+    "campus_lng": -78.789
   }
 ]

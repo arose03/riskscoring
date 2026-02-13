@@ -165,6 +165,42 @@ export default function RentStudyPage() {
     }
   };
 
+  // Retry a failed study by re-running with the same parameters
+  const retryStudy = async (study: RentStudy) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Delete the old failed study
+      await fetch(`/api/rent-study/${study.id}`, { method: 'DELETE' });
+
+      // Re-run with the same market name
+      const res = await fetch('/api/rent-study', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          marketName: study.marketName,
+          city: study.marketName.split(',')[0]?.trim() || city,
+          state: study.marketName.split(',')[1]?.trim() || state,
+          universityName: study.universityName,
+        }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || 'Failed to retry study');
+        return;
+      }
+
+      setActiveStudy(data.study);
+      await fetchStudies();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to retry study');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Load a specific study
   const loadStudy = async (id: number) => {
     setLoading(true);
@@ -454,6 +490,17 @@ export default function RentStudyPage() {
                   </div>
                 )}
 
+                {/* Scraper warnings (shown even on partial success) */}
+                {activeStudy.status === 'complete' && activeStudy.summary?.errors && (activeStudy.summary.errors as string[]).length > 0 && (
+                  <div className="bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 flex items-start gap-2">
+                    <span className="text-amber-500 text-sm leading-none mt-0.5">!</span>
+                    <div className="text-xs text-amber-700">
+                      <span className="font-medium">Some scrapers had issues: </span>
+                      {(activeStudy.summary.errors as string[]).join('; ')}
+                    </div>
+                  </div>
+                )}
+
                 {/* Source breakdown */}
                 {activeStudy.summary?.bySource && Object.keys(activeStudy.summary.bySource).length > 0 && (
                   <div className="flex gap-2">
@@ -501,14 +548,38 @@ export default function RentStudyPage() {
                     <div className="p-8 text-center text-sm text-slate-400">
                       {activeStudy.status === 'scraping' ? 'Scraping in progress...' :
                        activeStudy.status === 'error' ? (
-                         <>
-                           Scraping encountered errors.
-                           {activeStudy.summary?.errors && (
-                             <span className="block mt-1 text-red-500 text-xs font-mono">
-                               {(activeStudy.summary.errors as string[]).join('; ')}
-                             </span>
-                           )}
-                         </>
+                         <div className="max-w-md mx-auto">
+                           <div className="bg-red-50 border border-red-200 rounded-lg p-5 text-left">
+                             <div className="flex items-start gap-3">
+                               <span className="text-red-500 text-lg leading-none mt-0.5">!</span>
+                               <div>
+                                 <h4 className="text-sm font-semibold text-red-800">Scraping Failed</h4>
+                                 {activeStudy.summary?.errors ? (
+                                   <ul className="mt-2 space-y-1">
+                                     {(activeStudy.summary.errors as string[]).map((err, i) => (
+                                       <li key={i} className="text-sm text-red-700 font-mono">{err}</li>
+                                     ))}
+                                   </ul>
+                                 ) : (
+                                   <p className="mt-1 text-sm text-red-700">An unknown error occurred.</p>
+                                 )}
+                                 {(activeStudy.summary?.errors as string[] | undefined)?.some(e => e.includes('API_KEY') || e.includes('not set')) && (
+                                   <p className="mt-3 text-xs text-red-600">
+                                     Add <code className="bg-red-100 px-1 rounded">RENTCAST_API_KEY</code> to your <code className="bg-red-100 px-1 rounded">.env</code> file. Get a key at{' '}
+                                     <a href="https://developers.rentcast.io" target="_blank" rel="noopener noreferrer" className="underline hover:text-red-800">developers.rentcast.io</a>.
+                                   </p>
+                                 )}
+                                 <button
+                                   onClick={() => retryStudy(activeStudy)}
+                                   disabled={loading}
+                                   className="mt-4 px-3 py-1.5 text-xs font-medium bg-red-600 text-white rounded hover:bg-red-700 disabled:bg-red-300 transition-colors"
+                                 >
+                                   {loading ? 'Retrying...' : 'Retry Study'}
+                                 </button>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
                        ) :
                        'No comps found. Try a different market or broaden your search.'}
                     </div>
@@ -635,6 +706,7 @@ function SummaryCard({ label, value, sublabel, accent }: {
 
 function SourceBadge({ source }: { source: string }) {
   const colors: Record<string, string> = {
+    'rentcast': 'bg-teal-100 text-teal-700',
     'apartments.com': 'bg-orange-100 text-orange-700',
     'zillow': 'bg-blue-100 text-blue-700',
     'rentcafe': 'bg-green-100 text-green-700',

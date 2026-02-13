@@ -15,6 +15,14 @@ export async function GET() {
 // POST /api/rent-study – Create a new rent study (triggers scraping)
 export async function POST(req: NextRequest) {
   try {
+    // Pre-flight: ensure RentCast API key is configured
+    if (!process.env.RENTCAST_API_KEY) {
+      return NextResponse.json(
+        { error: 'RENTCAST_API_KEY is not configured. Add it to your .env file to enable rent comp scraping.' },
+        { status: 503 }
+      );
+    }
+
     const body = await req.json();
     const { marketName, city, state, centerLat, centerLng, radiusMiles, universityId, universityName } = body;
 

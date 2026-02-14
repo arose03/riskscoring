@@ -17,8 +17,8 @@ function normalizeUnitType(beds: number): UnitType {
 }
 
 function buildSearchUrl(params: ScraperSearchParams, page: number = 1): string {
-  const city = params.city.toLowerCase().replace(/\s+/g, '-');
-  const state = params.state.toLowerCase().replace(/\s+/g, '-');
+  const city = (params.city || '').toLowerCase().replace(/\s+/g, '-');
+  const state = (params.state || '').toLowerCase().replace(/\s+/g, '-');
   let url = `https://www.apartments.com/student-housing/${city}-${state}/`;
   if (page > 1) {
     url += `${page}/`;
@@ -220,8 +220,8 @@ export const apartmentsScraper: RentScraper = {
 
       // Also try the non-student-housing URL if we got few results
       if (allComps.length < 5) {
-        const altCity = params.city.toLowerCase().replace(/\s+/g, '-');
-        const altState = params.state.toLowerCase().replace(/\s+/g, '-');
+        const altCity = (params.city || '').toLowerCase().replace(/\s+/g, '-');
+        const altState = (params.state || '').toLowerCase().replace(/\s+/g, '-');
         const altUrl = `https://www.apartments.com/${altCity}-${altState}/`;
         console.log(`[apartments.com] Trying general search: ${altUrl}`);
 

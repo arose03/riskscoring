@@ -17,8 +17,8 @@ function normalizeUnitType(beds: number): UnitType {
 }
 
 function buildSearchUrl(params: ScraperSearchParams): string {
-  const city = params.city.toLowerCase().replace(/\s+/g, '-');
-  const state = params.state.toLowerCase().replace(/\s+/g, '-');
+  const city = (params.city || '').toLowerCase().replace(/\s+/g, '-');
+  const state = (params.state || '').toLowerCase().replace(/\s+/g, '-');
   return `https://www.zillow.com/${city}-${state}/rentals/`;
 }
 

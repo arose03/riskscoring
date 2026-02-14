@@ -136,11 +136,11 @@ async function fetchRentalListings(params: ScraperSearchParams): Promise<Scraped
   if (params.lat && params.lng) {
     queryParams.latitude = String(params.lat);
     queryParams.longitude = String(params.lng);
-    queryParams.radius = String(params.radiusMiles || 5);
+    queryParams.radius = String(params.radiusMiles || 1);
   } else {
     // Fall back to city/state
-    queryParams.city = params.city;
-    queryParams.state = params.state;
+    if (params.city) queryParams.city = params.city;
+    if (params.state) queryParams.state = params.state;
   }
 
   // Filter to residential rental types relevant for student housing

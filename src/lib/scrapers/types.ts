@@ -33,8 +33,9 @@ export interface ScrapedComp {
 }
 
 export interface ScraperSearchParams {
-  city: string;
-  state: string;
+  city?: string;
+  state?: string;
+  address?: string;
   lat?: number;
   lng?: number;
   radiusMiles?: number;

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createRentStudy, listRentStudies } from '@/lib/scrapers';
+import { geocodeAddress } from '@/lib/geocode';
 
 // GET /api/rent-study – List all rent studies
 export async function GET() {
@@ -24,19 +25,22 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { marketName, city, state, centerLat, centerLng, radiusMiles, universityId, universityName } = body;
+    const { address, radiusMiles, universityId, universityName } = body;
 
-    if (!city || !state) {
-      return NextResponse.json({ error: 'city and state are required' }, { status: 400 });
+    if (!address) {
+      return NextResponse.json({ error: 'Address is required' }, { status: 400 });
     }
 
+    // Geocode the address to get lat/lng
+    const geo = await geocodeAddress(address);
+    console.log(`[rent-study] Geocoded "${address}" -> ${geo.lat}, ${geo.lng} (${geo.displayName})`);
+
     const study = await createRentStudy({
-      marketName: marketName || `${city}, ${state}`,
-      city,
-      state,
-      centerLat,
-      centerLng,
-      radiusMiles,
+      marketName: address,
+      address,
+      centerLat: geo.lat,
+      centerLng: geo.lng,
+      radiusMiles: radiusMiles || 1,
       universityId,
       universityName,
     });
@@ -45,7 +49,7 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     console.error('Create rent study error:', err);
     return NextResponse.json(
-      { error: 'Failed to create rent study', details: err instanceof Error ? err.message : 'Unknown' },
+      { error: err instanceof Error ? err.message : 'Failed to create rent study' },
       { status: 500 }
     );
   }

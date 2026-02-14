@@ -70,8 +70,8 @@ type SortKey = 'propertyName' | 'rent' | 'rentPerBed' | 'beds' | 'source' | 'sqf
 
 export default function RentStudyPage() {
   // Search form state
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
+  const [address, setAddress] = useState('');
+  const [radiusMiles, setRadiusMiles] = useState(1);
   const [universitySearch, setUniversitySearch] = useState('');
   const [selectedUniversity, setSelectedUniversity] = useState<University | null>(null);
   const [universityResults, setUniversityResults] = useState<University[]>([]);
@@ -127,8 +127,8 @@ export default function RentStudyPage() {
 
   // Run new rent study
   const runStudy = async () => {
-    if (!city || !state) {
-      setError('Please enter a city and state');
+    if (!address.trim()) {
+      setError('Please enter an address');
       return;
     }
 
@@ -140,13 +140,10 @@ export default function RentStudyPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          city,
-          state,
-          marketName: `${city}, ${state.toUpperCase()}`,
+          address: address.trim(),
+          radiusMiles,
           universityId: selectedUniversity?.id,
           universityName: selectedUniversity?.name,
-          centerLat: selectedUniversity?.campus_lat,
-          centerLng: selectedUniversity?.campus_lng,
         }),
       });
       const data = await res.json();
@@ -174,14 +171,13 @@ export default function RentStudyPage() {
       // Delete the old failed study
       await fetch(`/api/rent-study/${study.id}`, { method: 'DELETE' });
 
-      // Re-run with the same market name
+      // Re-run with the same address
       const res = await fetch('/api/rent-study', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          marketName: study.marketName,
-          city: study.marketName.split(',')[0]?.trim() || city,
-          state: study.marketName.split(',')[1]?.trim() || state,
+          address: study.marketName,
+          radiusMiles,
           universityName: study.universityName,
         }),
       });
@@ -293,26 +289,31 @@ export default function RentStudyPage() {
 
               <div className="space-y-3">
                 <div>
-                  <label className="block text-xs font-medium text-slate-600 mb-1">City</label>
+                  <label className="block text-xs font-medium text-slate-600 mb-1">Address</label>
                   <input
                     type="text"
-                    value={city}
-                    onChange={e => setCity(e.target.value)}
-                    placeholder="e.g. Athens"
+                    value={address}
+                    onChange={e => setAddress(e.target.value)}
+                    placeholder="e.g. 123 Main St, Athens, GA"
                     className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-slate-600 mb-1">State</label>
-                  <input
-                    type="text"
-                    value={state}
-                    onChange={e => setState(e.target.value)}
-                    placeholder="e.g. GA"
-                    maxLength={2}
-                    className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 uppercase"
-                  />
+                  <label className="block text-xs font-medium text-slate-600 mb-1">Search Radius</label>
+                  <select
+                    value={radiusMiles}
+                    onChange={e => setRadiusMiles(parseFloat(e.target.value))}
+                    className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                  >
+                    <option value={0.25}>0.25 miles</option>
+                    <option value={0.5}>0.5 miles</option>
+                    <option value={0.75}>0.75 miles</option>
+                    <option value={1}>1 mile</option>
+                    <option value={2}>2 miles</option>
+                    <option value={3}>3 miles</option>
+                    <option value={5}>5 miles</option>
+                  </select>
                 </div>
 
                 <div className="relative">
@@ -353,7 +354,7 @@ export default function RentStudyPage() {
 
                 <button
                   onClick={runStudy}
-                  disabled={loading || !city || !state}
+                  disabled={loading || !address.trim()}
                   className="w-full py-2 px-4 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors"
                 >
                   {loading ? (

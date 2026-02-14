@@ -99,8 +99,9 @@ export function computeRentSummary(comps: Array<{ rentPerBed: number | null; ren
 // Create a new rent study, run scrapers, and save results
 export async function createRentStudy(params: {
   marketName: string;
-  city: string;
-  state: string;
+  address?: string;
+  city?: string;
+  state?: string;
   centerLat?: number;
   centerLng?: number;
   radiusMiles?: number;
@@ -129,6 +130,7 @@ export async function createRentStudy(params: {
     const scraperResults = await runAllScrapers({
       city: params.city,
       state: params.state,
+      address: params.address,
       lat: params.centerLat,
       lng: params.centerLng,
       radiusMiles: params.radiusMiles,

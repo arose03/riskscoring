@@ -83,7 +83,23 @@ function initSchema(db: Database.Database) {
       pet_friendly INTEGER DEFAULT 0,
       listing_url TEXT,
       scraped_at TEXT NOT NULL DEFAULT (datetime('now')),
-      raw_data TEXT
+      raw_data TEXT,
+      google_rating REAL,
+      google_review_count INTEGER,
+      property_website TEXT
     );
   `);
+
+  // Migrate existing databases: add columns if they don't exist yet
+  const cols = db.prepare(`PRAGMA table_info(rent_comps)`).all() as { name: string }[];
+  const colNames = new Set(cols.map(c => c.name));
+  if (!colNames.has('google_rating')) {
+    db.exec(`ALTER TABLE rent_comps ADD COLUMN google_rating REAL`);
+  }
+  if (!colNames.has('google_review_count')) {
+    db.exec(`ALTER TABLE rent_comps ADD COLUMN google_review_count INTEGER`);
+  }
+  if (!colNames.has('property_website')) {
+    db.exec(`ALTER TABLE rent_comps ADD COLUMN property_website TEXT`);
+  }
 }

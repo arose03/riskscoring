@@ -29,6 +29,9 @@ export interface ScrapedComp {
   hasParking?: boolean;
   petFriendly?: boolean;
   listingUrl?: string;
+  googleRating?: number;
+  googleReviewCount?: number;
+  propertyWebsite?: string;
   rawData?: Record<string, unknown>;
 }
 
@@ -108,6 +111,9 @@ export interface RentComp {
   hasParking: boolean;
   petFriendly: boolean;
   listingUrl: string | null;
+  googleRating: number | null;
+  googleReviewCount: number | null;
+  propertyWebsite: string | null;
   scrapedAt: string;
 }
 

@@ -23,6 +23,9 @@ interface RentComp {
   hasPool: boolean;
   hasGym: boolean;
   listingUrl: string | null;
+  googleRating: number | null;
+  googleReviewCount: number | null;
+  propertyWebsite: string | null;
 }
 
 interface RentStudySummary {
@@ -62,7 +65,7 @@ interface University {
   campus_lng: number | null;
 }
 
-type SortKey = 'propertyName' | 'rent' | 'rentPerBed' | 'beds' | 'source' | 'sqft';
+type SortKey = 'propertyName' | 'rent' | 'rentPerBed' | 'beds' | 'source' | 'sqft' | 'googleRating';
 
 // ============================================================
 // Main Component
@@ -604,6 +607,12 @@ export default function RentStudyPage() {
                             <th className="text-right px-3 py-2 font-medium text-blue-700 cursor-pointer hover:text-blue-900 bg-blue-50" onClick={() => handleSort('rentPerBed')}>
                               $/Bed{sortIcon('rentPerBed')}
                             </th>
+                            <th className="text-center px-3 py-2 font-medium text-slate-600 cursor-pointer hover:text-slate-900" onClick={() => handleSort('googleRating')}>
+                              Rating{sortIcon('googleRating')}
+                            </th>
+                            <th className="text-left px-3 py-2 font-medium text-slate-600">
+                              Website
+                            </th>
                             <th className="text-left px-3 py-2 font-medium text-slate-600 cursor-pointer hover:text-slate-900" onClick={() => handleSort('source')}>
                               Source{sortIcon('source')}
                             </th>
@@ -641,6 +650,34 @@ export default function RentStudyPage() {
                               </td>
                               <td className="px-3 py-2 text-right font-bold text-blue-700 bg-blue-50/50">
                                 {fmt(comp.rentPerBed)}
+                              </td>
+                              <td className="px-3 py-2 text-center">
+                                {comp.googleRating != null ? (
+                                  <span className="inline-flex items-center gap-1 text-sm" title={`${comp.googleReviewCount ?? 0} reviews`}>
+                                    <span className="text-yellow-500">&#9733;</span>
+                                    <span className="font-medium text-slate-800">{comp.googleRating.toFixed(1)}</span>
+                                    {comp.googleReviewCount != null && (
+                                      <span className="text-xs text-slate-400">({comp.googleReviewCount})</span>
+                                    )}
+                                  </span>
+                                ) : (
+                                  <span className="text-slate-300">&mdash;</span>
+                                )}
+                              </td>
+                              <td className="px-3 py-2">
+                                {comp.propertyWebsite ? (
+                                  <a
+                                    href={comp.propertyWebsite}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-600 hover:text-blue-800 hover:underline text-xs truncate block max-w-[140px]"
+                                    title={comp.propertyWebsite}
+                                  >
+                                    {new URL(comp.propertyWebsite).hostname.replace(/^www\./, '')}
+                                  </a>
+                                ) : (
+                                  <span className="text-slate-300">&mdash;</span>
+                                )}
                               </td>
                               <td className="px-3 py-2">
                                 <SourceBadge source={comp.source} />

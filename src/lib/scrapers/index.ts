@@ -6,6 +6,7 @@
 import { getDb } from '../db';
 import { haversineDistance } from '../scoring';
 import { rentcastScraper } from './rentcast';
+import { enrichWithGooglePlaces } from './google-places';
 import {
   RentScraper,
   ScraperSearchParams,
@@ -144,8 +145,8 @@ export async function createRentStudy(params: {
         distance_from_campus, total_units, year_built,
         unit_type, beds, baths, sqft, rent, rent_per_bed, rent_per_sqft,
         furnished, has_pool, has_gym, has_parking, pet_friendly,
-        listing_url, raw_data
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        listing_url, raw_data, google_rating, google_review_count, property_website
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
     const insertMany = db.transaction((comps: ScrapedComp[]) => {
@@ -179,17 +180,23 @@ export async function createRentStudy(params: {
           comp.hasParking ? 1 : 0,
           comp.petFriendly ? 1 : 0,
           comp.listingUrl || null,
-          comp.rawData ? JSON.stringify(comp.rawData) : null
+          comp.rawData ? JSON.stringify(comp.rawData) : null,
+          comp.googleRating ?? null,
+          comp.googleReviewCount ?? null,
+          comp.propertyWebsite || null
         );
       }
     });
 
-    const allComps: ScrapedComp[] = [];
+    let allComps: ScrapedComp[] = [];
     const errors: string[] = [];
     for (const sr of scraperResults) {
       allComps.push(...sr.comps);
       if (sr.error) errors.push(`${sr.source}: ${sr.error}`);
     }
+
+    // Enrich comps with Google Places data (rating + website)
+    allComps = await enrichWithGooglePlaces(allComps);
 
     insertMany(allComps);
 
@@ -265,6 +272,9 @@ export function getRentStudy(id: number): RentStudy | null {
       hasParking: !!(c.has_parking as number),
       petFriendly: !!(c.pet_friendly as number),
       listingUrl: c.listing_url as string | null,
+      googleRating: (c.google_rating as number) ?? null,
+      googleReviewCount: (c.google_review_count as number) ?? null,
+      propertyWebsite: (c.property_website as string) ?? null,
       scrapedAt: c.scraped_at as string,
     })),
   };

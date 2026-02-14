@@ -1,36 +1,34 @@
 // ============================================================
 // Google Places API – Enrich comps with ratings & website
-// Uses the Places API (New) Text Search endpoint
+// Uses the legacy Places API (Find Place) with the same
+// GOOGLE_MAPS_API_KEY already used for geocoding.
 // ============================================================
 
 import { ScrapedComp } from './types';
 
-const PLACES_BASE = 'https://places.googleapis.com/v1/places:searchText';
-
 function getApiKey(): string | null {
-  return process.env.GOOGLE_PLACES_API_KEY || null;
+  return process.env.GOOGLE_MAPS_API_KEY || null;
 }
 
-interface PlaceResult {
+interface PlaceCandidate {
   rating?: number;
-  userRatingCount?: number;
-  websiteUri?: string;
+  user_ratings_total?: number;
+  website?: string;
 }
 
-interface PlacesResponse {
-  places?: PlaceResult[];
+interface FindPlaceResponse {
+  status: string;
+  candidates?: PlaceCandidate[];
 }
 
-async function searchPlace(query: string, apiKey: string): Promise<PlaceResult | null> {
-  const res = await fetch(PLACES_BASE, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Goog-Api-Key': apiKey,
-      'X-Goog-FieldMask': 'places.rating,places.userRatingCount,places.websiteUri',
-    },
-    body: JSON.stringify({ textQuery: query, maxResultCount: 1 }),
-  });
+async function findPlace(query: string, apiKey: string): Promise<PlaceCandidate | null> {
+  const url = new URL('https://maps.googleapis.com/maps/api/place/findplacefromtext/json');
+  url.searchParams.set('input', query);
+  url.searchParams.set('inputtype', 'textquery');
+  url.searchParams.set('fields', 'rating,user_ratings_total,website');
+  url.searchParams.set('key', apiKey);
+
+  const res = await fetch(url.toString(), { cache: 'no-store' });
 
   if (!res.ok) {
     const body = await res.text().catch(() => '');
@@ -38,33 +36,39 @@ async function searchPlace(query: string, apiKey: string): Promise<PlaceResult |
     return null;
   }
 
-  const data = (await res.json()) as PlacesResponse;
-  return data.places?.[0] ?? null;
+  const data = (await res.json()) as FindPlaceResponse;
+
+  if (data.status !== 'OK' && data.status !== 'ZERO_RESULTS') {
+    console.warn(`[google-places] API status: ${data.status}`);
+    return null;
+  }
+
+  return data.candidates?.[0] ?? null;
 }
 
 /**
  * Enrich scraped comps with Google Places rating and website.
  * Deduplicates lookups by address so each unique address is only queried once.
- * Gracefully skips if GOOGLE_PLACES_API_KEY is not set.
+ * Uses GOOGLE_MAPS_API_KEY (same key as geocoding). Skips if not set.
  */
 export async function enrichWithGooglePlaces(comps: ScrapedComp[]): Promise<ScrapedComp[]> {
   const apiKey = getApiKey();
   if (!apiKey) {
-    console.log('[google-places] GOOGLE_PLACES_API_KEY not set, skipping enrichment');
+    console.log('[google-places] GOOGLE_MAPS_API_KEY not set, skipping enrichment');
     return comps;
   }
 
   if (comps.length === 0) return comps;
 
   // Group comps by address to deduplicate API calls
-  const addressMap = new Map<string, PlaceResult | null>();
+  const addressMap = new Map<string, PlaceCandidate | null>();
   const uniqueAddresses = Array.from(new Set(comps.map(c => c.address).filter(Boolean)));
 
   console.log(`[google-places] Enriching ${uniqueAddresses.length} unique addresses...`);
 
   for (const addr of uniqueAddresses) {
     try {
-      const result = await searchPlace(addr, apiKey);
+      const result = await findPlace(addr, apiKey);
       addressMap.set(addr, result);
       // Small delay to avoid rate limiting
       if (uniqueAddresses.length > 5) {
@@ -86,8 +90,8 @@ export async function enrichWithGooglePlaces(comps: ScrapedComp[]): Promise<Scra
     return {
       ...comp,
       googleRating: place.rating ?? undefined,
-      googleReviewCount: place.userRatingCount ?? undefined,
-      propertyWebsite: place.websiteUri ?? undefined,
+      googleReviewCount: place.user_ratings_total ?? undefined,
+      propertyWebsite: place.website ?? undefined,
     };
   });
 }

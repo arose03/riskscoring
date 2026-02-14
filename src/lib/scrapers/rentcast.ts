@@ -59,21 +59,43 @@ async function fetchRentCast(endpoint: string, params: Record<string, string>): 
     if (v !== undefined && v !== '') url.searchParams.set(k, v);
   }
 
+  const apiKey = getApiKey();
+  const fullUrl = url.toString();
   console.log(`[rentcast] GET ${url.pathname}?${url.searchParams.toString()}`);
 
-  const res = await fetch(url.toString(), {
-    headers: {
-      'Accept': 'application/json',
-      'X-Api-Key': getApiKey(),
-    },
-  });
+  let lastError: Error | null = null;
 
-  if (!res.ok) {
+  // Retry up to 2 times for transient errors (429, 5xx)
+  for (let attempt = 0; attempt < 3; attempt++) {
+    if (attempt > 0) {
+      const delay = attempt * 2000;
+      console.log(`[rentcast] Retry attempt ${attempt} after ${delay}ms...`);
+      await new Promise(r => setTimeout(r, delay));
+    }
+
+    const res = await fetch(fullUrl, {
+      headers: {
+        'Accept': 'application/json',
+        'X-Api-Key': apiKey,
+      },
+      cache: 'no-store', // Prevent Next.js from caching API responses
+    });
+
+    if (res.ok) {
+      return res.json();
+    }
+
     const body = await res.text().catch(() => '');
-    throw new Error(`RentCast API ${res.status}: ${body || res.statusText}`);
+    lastError = new Error(`RentCast API ${res.status}: ${body || res.statusText}`);
+
+    // Only retry on rate-limit or server errors
+    if (res.status !== 429 && res.status < 500) {
+      throw lastError;
+    }
+    console.warn(`[rentcast] ${lastError.message}`);
   }
 
-  return res.json();
+  throw lastError!;
 }
 
 function listingToComp(listing: RentCastListing): ScrapedComp | null {

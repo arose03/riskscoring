@@ -1,9 +1,5 @@
-[build]
-builder = "nixpacks"
-buildCommand = "echo 'Static landing page'"
-
 [deploy]
-startCommand = "npx serve -l tcp://0.0.0.0:$PORT ."
+startCommand = "npm run start"
 healthcheckPath = "/"
 healthcheckTimeout = 30
 restartPolicyType = "on_failure"

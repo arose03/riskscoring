@@ -1,447 +1,403 @@
 'use client';
 
-import { useState, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
-type Recommendation = 'BIND' | 'CONDITIONAL_BIND' | 'DECLINE';
+type Recommendation = 'BIND' | 'CONDITIONAL_BIND' | 'DECLINE' | 'UNKNOWN' | 'ERROR';
 
-interface ProcessingResult {
-  success: boolean;
-  submission_id?: string;
-  recommendation?: Recommendation;
-  named_insured?: string;
-  occupancy_type?: string;
-  total_tiv?: number;
-  total_premium?: number;
-  blended_property_rate?: number;
-  locations_count?: number;
-  buildings_count?: number;
-  flags?: number;
-  decline_flags?: number;
-  referral_flags?: number;
-  data_gaps?: string[];
-  strengths?: string[];
-  concerns?: string[];
-  workbook_base64?: string;
-  document_types_found?: string[];
-  parse_errors?: string[];
+interface ConfigStatus {
+  imap_configured: boolean;
+  smtp_configured: boolean;
+  imap_host: string | null;
+  imap_user: string | null;
+  smtp_host: string | null;
+  smtp_user: string | null;
+  mailbox: string;
+}
+
+interface ProcessedSubmission {
+  id: number;
+  submission_id: string;
+  named_insured: string;
+  recommendation: Recommendation;
+  total_tiv: number;
+  total_premium: number;
+  flags: number;
+  from_email: string;
+  subject: string;
+  processed_at: string;
+}
+
+interface CheckResult {
+  checked?: boolean;
+  new_emails?: number;
+  processed?: number;
+  errors?: number;
+  results?: {
+    messageId: string;
+    subject: string;
+    from: string;
+    recommendation?: string;
+    namedInsured?: string;
+    totalPremium?: number;
+    totalTIV?: number;
+    error?: string;
+    processedAt: string;
+  }[];
   error?: string;
 }
 
-const ACCEPTED_TYPES = [
-  '.pdf', '.xlsx', '.xls', '.csv', '.docx',
-  '.jpg', '.jpeg', '.png',
-];
-
-const RECOMMENDATION_CONFIG: Record<Recommendation, { color: string; bg: string; label: string }> = {
-  BIND: { color: 'text-green-800', bg: 'bg-green-100 border-green-400', label: 'BIND' },
-  CONDITIONAL_BIND: { color: 'text-yellow-800', bg: 'bg-yellow-100 border-yellow-400', label: 'CONDITIONAL BIND' },
-  DECLINE: { color: 'text-red-800', bg: 'bg-red-100 border-red-400', label: 'DECLINE' },
+const REC_STYLES: Record<Recommendation, { badge: string; row: string }> = {
+  BIND:             { badge: 'bg-green-100 text-green-800 border border-green-300',  row: 'bg-green-50' },
+  CONDITIONAL_BIND: { badge: 'bg-yellow-100 text-yellow-800 border border-yellow-300', row: 'bg-yellow-50' },
+  DECLINE:          { badge: 'bg-red-100 text-red-800 border border-red-300',        row: 'bg-red-50' },
+  UNKNOWN:          { badge: 'bg-gray-100 text-gray-600 border border-gray-300',     row: '' },
+  ERROR:            { badge: 'bg-orange-100 text-orange-700 border border-orange-300', row: 'bg-orange-50' },
 };
 
+function fmt(n: number): string {
+  return '$' + Math.round(n).toLocaleString('en-US');
+}
+
+function timeAgo(iso: string): string {
+  if (!iso) return '';
+  const diff = Date.now() - new Date(iso).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return `${mins}m ago`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+  return `${Math.floor(hrs / 24)}d ago`;
+}
+
 export default function SubmissionPage() {
-  const [files, setFiles] = useState<File[]>([]);
-  const [isDragging, setIsDragging] = useState(false);
-  const [processing, setProcessing] = useState(false);
-  const [progress, setProgress] = useState('');
-  const [result, setResult] = useState<ProcessingResult | null>(null);
-  const [dscr, setDscr] = useState('');
-  const [operatorName, setOperatorName] = useState('');
-  const [occupancyType, setOccupancyType] = useState<'auto' | 'student_housing' | 'conventional_mf'>('auto');
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [config, setConfig] = useState<ConfigStatus | null>(null);
+  const [submissions, setSubmissions] = useState<ProcessedSubmission[]>([]);
+  const [checking, setChecking] = useState(false);
+  const [lastCheck, setLastCheck] = useState<string | null>(null);
+  const [lastResult, setLastResult] = useState<CheckResult | null>(null);
+  const [autoRefresh, setAutoRefresh] = useState(false);
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-    const dropped = Array.from(e.dataTransfer.files);
-    setFiles((prev) => [...prev, ...dropped]);
-  }, []);
-
-  const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const selected = Array.from(e.target.files ?? []);
-    setFiles((prev) => [...prev, ...selected]);
-  }, []);
-
-  const removeFile = (index: number) => {
-    setFiles((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const handleSubmit = async () => {
-    if (files.length === 0) return;
-
-    setProcessing(true);
-    setResult(null);
-    setProgress('Uploading files...');
-
+  const loadConfig = useCallback(async () => {
     try {
-      const formData = new FormData();
-      files.forEach((f) => formData.append('files', f));
-      if (dscr) formData.append('dscr', dscr);
-      if (operatorName) formData.append('operatorName', operatorName);
-      if (occupancyType !== 'auto') formData.append('occupancyType', occupancyType);
+      const res = await fetch('/api/email/check');
+      const data = await res.json();
+      setConfig(data as ConfigStatus);
+    } catch {
+      setConfig(null);
+    }
+  }, []);
 
-      setProgress('Classifying documents...');
+  const loadSubmissions = useCallback(async () => {
+    try {
+      const res = await fetch('/api/email/status');
+      const data = await res.json();
+      setSubmissions(data.submissions ?? []);
+    } catch {
+      setSubmissions([]);
+    }
+  }, []);
 
-      const response = await fetch('/api/submission/process', {
-        method: 'POST',
-        body: formData,
-      });
+  useEffect(() => {
+    loadConfig();
+    loadSubmissions();
+  }, [loadConfig, loadSubmissions]);
 
-      setProgress('Scoring submission...');
-      const data: ProcessingResult = await response.json();
-      setResult(data);
-    } catch (err) {
-      setResult({ success: false, error: String(err) });
+  // Auto-refresh every 60 seconds when enabled
+  useEffect(() => {
+    if (!autoRefresh) return;
+    const interval = setInterval(async () => {
+      await handleCheckNow();
+    }, 60000);
+    return () => clearInterval(interval);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoRefresh]);
+
+  const handleCheckNow = async () => {
+    setChecking(true);
+    try {
+      const res = await fetch('/api/email/check', { method: 'POST' });
+      const data: CheckResult = await res.json();
+      setLastResult(data);
+      setLastCheck(new Date().toISOString());
+      await loadSubmissions();
     } finally {
-      setProcessing(false);
-      setProgress('');
+      setChecking(false);
     }
   };
 
-  const downloadWorkbook = () => {
-    if (!result?.workbook_base64) return;
-    const blob = new Blob(
-      [Buffer.from(result.workbook_base64, 'base64')],
-      { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }
-    );
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `HABGEN_UW_${result.named_insured?.replace(/\s+/g, '_') ?? 'Submission'}_${new Date().toISOString().split('T')[0]}.xlsx`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const recConfig = result?.recommendation ? RECOMMENDATION_CONFIG[result.recommendation] : null;
+  const isReady = config?.imap_configured && config?.smtp_configured;
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto space-y-6">
 
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-navy-900" style={{ color: '#1F3864' }}>
-            Submission Intake & Underwriting Engine
-          </h1>
-          <p className="text-gray-600 mt-2">
-            Upload a complete submission package. The engine will parse all documents, score the risk, and generate an 8-tab underwriting workbook.
-          </p>
-        </div>
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-2xl font-bold" style={{ color: '#1F3864' }}>
+              Submission Intake — Email Processor
+            </h1>
+            <p className="text-sm text-gray-500 mt-1">
+              Automatically processes incoming submission emails, runs the underwriting pipeline, and replies with the workbook.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-          {/* Left: Upload + Config */}
-          <div className="lg:col-span-2 space-y-6">
-
-            {/* Drop zone */}
+          {/* Auto-refresh toggle */}
+          <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer mt-1">
             <div
-              className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors cursor-pointer ${
-                isDragging
-                  ? 'border-blue-500 bg-blue-50'
-                  : 'border-gray-300 hover:border-gray-400 bg-white'
-              }`}
-              onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
-              onDragLeave={() => setIsDragging(false)}
-              onDrop={handleDrop}
-              onClick={() => fileInputRef.current?.click()}
+              onClick={() => setAutoRefresh((v) => !v)}
+              className={`relative w-10 h-5 rounded-full transition-colors cursor-pointer ${autoRefresh ? 'bg-blue-500' : 'bg-gray-300'}`}
             >
-              <input
-                ref={fileInputRef}
-                type="file"
-                multiple
-                accept={ACCEPTED_TYPES.join(',')}
-                className="hidden"
-                onChange={handleFileSelect}
-              />
-              <svg className="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-                  d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-              </svg>
-              <p className="text-gray-600 font-medium">Drop files here or click to browse</p>
-              <p className="text-sm text-gray-400 mt-1">
-                PDF, XLSX, XLS, CSV, DOCX, JPG, PNG
-              </p>
-              <p className="text-xs text-gray-400 mt-1">
-                ACORD 125/140 · Statement of Values · Loss Runs · GL Supplemental · Inspection Reports
-              </p>
+              <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${autoRefresh ? 'translate-x-5' : 'translate-x-0.5'}`} />
             </div>
-
-            {/* File list */}
-            {files.length > 0 && (
-              <div className="bg-white rounded-lg border border-gray-200 divide-y divide-gray-100">
-                <div className="px-4 py-3 bg-gray-50 flex items-center justify-between rounded-t-lg">
-                  <span className="text-sm font-medium text-gray-700">{files.length} file(s) queued</span>
-                  <button
-                    onClick={() => setFiles([])}
-                    className="text-xs text-red-600 hover:text-red-800"
-                  >
-                    Clear all
-                  </button>
-                </div>
-                {files.map((file, idx) => (
-                  <div key={idx} className="px-4 py-2 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <FileTypeIcon ext={file.name.split('.').pop() ?? ''} />
-                      <div>
-                        <p className="text-sm text-gray-800">{file.name}</p>
-                        <p className="text-xs text-gray-400">{(file.size / 1024).toFixed(0)} KB</p>
-                      </div>
-                    </div>
-                    <button onClick={() => removeFile(idx)} className="text-gray-400 hover:text-red-500 ml-4">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Submit button */}
-            <button
-              onClick={handleSubmit}
-              disabled={files.length === 0 || processing}
-              className="w-full py-3 px-6 rounded-lg font-semibold text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              style={{ backgroundColor: '#1F3864' }}
-            >
-              {processing ? (
-                <span className="flex items-center justify-center gap-2">
-                  <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                  </svg>
-                  {progress || 'Processing...'}
-                </span>
-              ) : (
-                'Process Submission →'
-              )}
-            </button>
-          </div>
-
-          {/* Right: Optional overrides */}
-          <div className="space-y-6">
-            <div className="bg-white rounded-lg border border-gray-200 p-4">
-              <h3 className="text-sm font-semibold text-gray-700 mb-4">Optional Overrides</h3>
-
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Occupancy Type</label>
-                  <select
-                    value={occupancyType}
-                    onChange={(e) => setOccupancyType(e.target.value as typeof occupancyType)}
-                    className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
-                  >
-                    <option value="auto">Auto-detect</option>
-                    <option value="student_housing">Student Housing</option>
-                    <option value="conventional_mf">Conventional MF</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">DSCR</label>
-                  <input
-                    type="number"
-                    step="0.01"
-                    placeholder="e.g. 1.35"
-                    value={dscr}
-                    onChange={(e) => setDscr(e.target.value)}
-                    className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
-                  />
-                  <p className="text-xs text-gray-400 mt-1">Debt Service Coverage Ratio</p>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Operator / Manager</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Asset Living"
-                    value={operatorName}
-                    onChange={(e) => setOperatorName(e.target.value)}
-                    className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Supported documents */}
-            <div className="bg-white rounded-lg border border-gray-200 p-4">
-              <h3 className="text-sm font-semibold text-gray-700 mb-3">Supported Documents</h3>
-              <ul className="text-xs text-gray-600 space-y-1.5">
-                {[
-                  ['ACORD 125', 'Auto-parsed'],
-                  ['ACORD 140', 'Auto-parsed'],
-                  ['Statement of Values', 'XLS/CSV/PDF'],
-                  ['5-Year Loss Runs', 'PDF'],
-                  ['GL Supplemental', 'PDF'],
-                  ['Prior Declarations', 'PDF'],
-                  ['Inspection Reports', 'PDF'],
-                  ['Property Photos', 'JPG/PNG'],
-                ].map(([doc, format]) => (
-                  <li key={doc} className="flex justify-between">
-                    <span>{doc}</span>
-                    <span className="text-gray-400">{format}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+            Auto-check (60s)
+          </label>
         </div>
 
-        {/* Results */}
-        {result && (
-          <div className="mt-8 space-y-6">
+        {/* Config status cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <ConfigCard
+            title="Inbox (IMAP)"
+            configured={config?.imap_configured ?? false}
+            details={config?.imap_configured
+              ? `${config.imap_user} @ ${config.imap_host} → ${config.mailbox}`
+              : undefined}
+            envVars={['IMAP_HOST', 'IMAP_PORT (default 993)', 'IMAP_USER', 'IMAP_PASSWORD', 'IMAP_MAILBOX (default INBOX)']}
+          />
+          <ConfigCard
+            title="Outbox (SMTP)"
+            configured={config?.smtp_configured ?? false}
+            details={config?.smtp_configured
+              ? `${config.smtp_user} @ ${config.smtp_host}`
+              : undefined}
+            envVars={['SMTP_HOST', 'SMTP_PORT (default 587)', 'SMTP_USER', 'SMTP_PASSWORD', 'SMTP_FROM_NAME', 'SMTP_CC_ADDRESS (optional)']}
+          />
+        </div>
 
-            {/* Error state */}
-            {!result.success && (
-              <div className="bg-red-50 border border-red-300 rounded-lg p-4">
-                <h3 className="font-semibold text-red-800 mb-1">Processing Failed</h3>
-                <p className="text-sm text-red-700">{result.error}</p>
-              </div>
-            )}
+        {/* How it works */}
+        {!isReady && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h3 className="font-semibold text-blue-800 mb-2">How to set up email intake</h3>
+            <ol className="text-sm text-blue-700 space-y-1 list-decimal list-inside">
+              <li>Create a dedicated inbox (e.g. <code className="bg-blue-100 px-1 rounded">submissions@yourdomain.com</code>)</li>
+              <li>Set the IMAP and SMTP environment variables above</li>
+              <li>Brokers email the submission package (PDF/XLSX attachments) to that inbox</li>
+              <li>Click &quot;Check Now&quot; or enable auto-check — the engine fetches, scores, and replies automatically</li>
+              <li>Broker receives an email back with the 8-tab Excel workbook attached</li>
+            </ol>
+            <p className="text-xs text-blue-600 mt-3">
+              Works with Gmail (App Password), Outlook, or any IMAP/SMTP server.
+              For Gmail: enable IMAP in settings and use an App Password.
+            </p>
+          </div>
+        )}
 
-            {/* Success state */}
-            {result.success && (
+        {/* Check Now button + last result */}
+        <div className="flex items-center gap-4">
+          <button
+            onClick={handleCheckNow}
+            disabled={checking || !isReady}
+            className="px-6 py-2.5 rounded-lg font-semibold text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            style={{ backgroundColor: isReady ? '#1F3864' : '#9ca3af' }}
+          >
+            {checking ? (
               <>
-                {/* Recommendation banner */}
-                {recConfig && result.recommendation && (
-                  <div className={`border-2 rounded-lg p-6 text-center ${recConfig.bg}`}>
-                    <div className={`text-4xl font-bold ${recConfig.color}`}>
-                      {recConfig.label}
-                    </div>
-                    <p className={`mt-1 text-lg ${recConfig.color}`}>
-                      {result.named_insured ?? 'Unknown Insured'}
-                    </p>
-                  </div>
-                )}
-
-                {/* Key metrics grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <MetricCard label="Total TIV" value={result.total_tiv ? '$' + Math.round(result.total_tiv).toLocaleString() : 'N/A'} />
-                  <MetricCard label="Total Premium" value={result.total_premium ? '$' + Math.round(result.total_premium).toLocaleString() : 'N/A'} />
-                  <MetricCard label="Property Rate" value={result.blended_property_rate ? '$' + result.blended_property_rate.toFixed(4) + '/$100' : 'N/A'} />
-                  <MetricCard label="Buildings / Locs" value={`${result.buildings_count ?? 0} / ${result.locations_count ?? 0}`} />
-                </div>
-
-                {/* Flags summary */}
-                {(result.flags ?? 0) > 0 && (
-                  <div className="grid grid-cols-2 gap-4">
-                    {(result.decline_flags ?? 0) > 0 && (
-                      <div className="bg-red-50 border border-red-300 rounded-lg p-4">
-                        <div className="text-2xl font-bold text-red-800">{result.decline_flags}</div>
-                        <div className="text-sm text-red-700">Decline Trigger(s)</div>
-                      </div>
-                    )}
-                    {(result.referral_flags ?? 0) > 0 && (
-                      <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-4">
-                        <div className="text-2xl font-bold text-yellow-800">{result.referral_flags}</div>
-                        <div className="text-sm text-yellow-700">Referral Item(s)</div>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* Strengths & Concerns */}
-                {(result.strengths?.length ?? 0) > 0 || (result.concerns?.length ?? 0) > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {(result.strengths?.length ?? 0) > 0 && (
-                      <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                        <h3 className="font-semibold text-green-800 mb-2">Key Strengths</h3>
-                        <ul className="space-y-1">
-                          {result.strengths!.map((s, i) => (
-                            <li key={i} className="text-sm text-green-700">• {s}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {(result.concerns?.length ?? 0) > 0 && (
-                      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                        <h3 className="font-semibold text-yellow-800 mb-2">Key Concerns</h3>
-                        <ul className="space-y-1">
-                          {result.concerns!.map((c, i) => (
-                            <li key={i} className="text-sm text-yellow-700">• {c}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                ) : null}
-
-                {/* Data gaps */}
-                {(result.data_gaps?.length ?? 0) > 0 && (
-                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                    <h3 className="font-semibold text-gray-700 mb-2">Data Gaps / Notes</h3>
-                    <ul className="space-y-1">
-                      {result.data_gaps!.map((gap, i) => (
-                        <li key={i} className="text-sm text-gray-600">• {gap}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Parse info */}
-                {(result.parse_errors?.length ?? 0) > 0 && (
-                  <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
-                    <h3 className="font-semibold text-orange-700 mb-2">Parse Notes</h3>
-                    <ul className="space-y-1">
-                      {result.parse_errors!.map((err, i) => (
-                        <li key={i} className="text-sm text-orange-600">• {err}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Documents found */}
-                {(result.document_types_found?.length ?? 0) > 0 && (
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                    <span className="text-sm font-medium text-blue-700">Documents detected: </span>
-                    <span className="text-sm text-blue-600">
-                      {result.document_types_found!.join(', ')}
-                    </span>
-                  </div>
-                )}
-
-                {/* Download button */}
-                <button
-                  onClick={downloadWorkbook}
-                  className="w-full py-4 px-6 rounded-lg font-semibold text-white bg-green-700 hover:bg-green-800 transition-colors flex items-center justify-center gap-2"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                  Download 8-Tab Underwriting Workbook (.xlsx)
-                </button>
+                <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+                Checking inbox...
               </>
+            ) : (
+              <>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                Check Inbox Now
+              </>
+            )}
+          </button>
+
+          {lastCheck && (
+            <span className="text-sm text-gray-500">
+              Last checked {timeAgo(lastCheck)}
+            </span>
+          )}
+        </div>
+
+        {/* Last check result */}
+        {lastResult && (
+          <div className={`rounded-lg p-4 border text-sm ${
+            lastResult.error
+              ? 'bg-red-50 border-red-300'
+              : lastResult.new_emails === 0
+              ? 'bg-gray-50 border-gray-200'
+              : 'bg-green-50 border-green-300'
+          }`}>
+            {lastResult.error ? (
+              <span className="text-red-700">Error: {lastResult.error}</span>
+            ) : lastResult.new_emails === 0 ? (
+              <span className="text-gray-600">Inbox empty — no new submissions found.</span>
+            ) : (
+              <div className="space-y-2">
+                <p className="font-semibold text-green-800">
+                  Processed {lastResult.processed} of {lastResult.new_emails} new email(s)
+                  {(lastResult.errors ?? 0) > 0 && ` (${lastResult.errors} error(s))`}
+                </p>
+                {lastResult.results?.map((r, i) => (
+                  <div key={i} className="text-xs text-green-700 ml-2">
+                    {r.error
+                      ? `❌ ${r.subject} — ${r.error}`
+                      : `✅ ${r.namedInsured ?? r.subject} → ${r.recommendation} — ${r.totalPremium ? fmt(r.totalPremium) : 'N/A'} premium`
+                    }
+                  </div>
+                ))}
+              </div>
             )}
           </div>
         )}
+
+        {/* Processed submissions table */}
+        <div className="bg-white rounded-lg border border-gray-200">
+          <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
+            <h2 className="font-semibold text-gray-800">
+              Processed Submissions
+              {submissions.length > 0 && (
+                <span className="ml-2 text-sm font-normal text-gray-500">({submissions.length})</span>
+              )}
+            </h2>
+            <button
+              onClick={loadSubmissions}
+              className="text-xs text-blue-600 hover:text-blue-800"
+            >
+              Refresh
+            </button>
+          </div>
+
+          {submissions.length === 0 ? (
+            <div className="px-4 py-12 text-center text-gray-400">
+              <svg className="mx-auto h-10 w-10 mb-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+                  d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+              </svg>
+              <p className="text-sm">No processed submissions yet.</p>
+              <p className="text-xs mt-1">
+                {isReady
+                  ? 'Click "Check Inbox Now" to process waiting emails.'
+                  : 'Configure IMAP/SMTP credentials to get started.'}
+              </p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-gray-50 text-left">
+                    {['Recommendation', 'Named Insured', 'From', 'Total TIV', 'Premium', 'Flags', 'Processed'].map((h) => (
+                      <th key={h} className="px-4 py-2.5 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {submissions.map((sub) => {
+                    const style = REC_STYLES[sub.recommendation] ?? REC_STYLES.UNKNOWN;
+                    return (
+                      <tr key={sub.id} className={`hover:bg-gray-50 transition-colors ${style.row}`}>
+                        <td className="px-4 py-3">
+                          <span className={`inline-block px-2 py-0.5 rounded text-xs font-semibold ${style.badge}`}>
+                            {sub.recommendation.replace('_', ' ')}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 font-medium text-gray-900">
+                          {sub.named_insured || '—'}
+                          {sub.subject && (
+                            <p className="text-xs text-gray-400 font-normal truncate max-w-48">{sub.subject}</p>
+                          )}
+                        </td>
+                        <td className="px-4 py-3 text-gray-500 text-xs">{sub.from_email || '—'}</td>
+                        <td className="px-4 py-3 text-gray-700">{sub.total_tiv ? fmt(sub.total_tiv) : '—'}</td>
+                        <td className="px-4 py-3 font-medium text-gray-900">{sub.total_premium ? fmt(sub.total_premium) : '—'}</td>
+                        <td className="px-4 py-3">
+                          {sub.flags > 0 ? (
+                            <span className="text-orange-600 font-medium">{sub.flags}</span>
+                          ) : (
+                            <span className="text-green-600">0</span>
+                          )}
+                        </td>
+                        <td className="px-4 py-3 text-gray-400 text-xs">{timeAgo(sub.processed_at)}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+
+        {/* Flow diagram */}
+        <div className="bg-white rounded-lg border border-gray-200 p-4">
+          <h3 className="text-sm font-semibold text-gray-700 mb-3">Automated Pipeline</h3>
+          <div className="flex flex-wrap items-center gap-2 text-xs text-gray-600">
+            {[
+              'Broker emails submission@habgen.com',
+              'Engine fetches unseen emails',
+              'Classifies each attachment',
+              'Parses ACORD 125 + SOV + Loss Runs',
+              'Runs property rating engine',
+              'Runs GL Scorer v3.1',
+              'Checks eligibility & referrals',
+              'Generates 8-tab Excel workbook',
+              'Emails broker with recommendation + workbook',
+            ].map((step, i, arr) => (
+              <span key={step} className="flex items-center gap-2">
+                <span className="bg-gray-100 rounded px-2 py-1">{step}</span>
+                {i < arr.length - 1 && <span className="text-gray-300">→</span>}
+              </span>
+            ))}
+          </div>
+        </div>
+
       </div>
     </div>
   );
 }
 
-function MetricCard({ label, value }: { label: string; value: string }) {
+function ConfigCard({
+  title,
+  configured,
+  details,
+  envVars,
+}: {
+  title: string;
+  configured: boolean;
+  details?: string;
+  envVars: string[];
+}) {
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-4">
-      <div className="text-xl font-bold text-gray-900">{value}</div>
-      <div className="text-xs text-gray-500 mt-1">{label}</div>
+    <div className={`rounded-lg border p-4 ${configured ? 'border-green-300 bg-green-50' : 'border-gray-200 bg-white'}`}>
+      <div className="flex items-center gap-2 mb-2">
+        <div className={`w-2.5 h-2.5 rounded-full ${configured ? 'bg-green-500' : 'bg-gray-300'}`} />
+        <h3 className="font-semibold text-gray-800 text-sm">{title}</h3>
+        <span className={`text-xs px-1.5 py-0.5 rounded ${configured ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
+          {configured ? 'Connected' : 'Not configured'}
+        </span>
+      </div>
+      {configured && details ? (
+        <p className="text-xs text-green-700 mb-2 font-mono">{details}</p>
+      ) : (
+        <div className="mt-2">
+          <p className="text-xs text-gray-500 mb-1">Required environment variables:</p>
+          <ul className="space-y-0.5">
+            {envVars.map((v) => (
+              <li key={v} className="text-xs font-mono text-gray-600 bg-gray-50 px-2 py-0.5 rounded">
+                {v}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
-  );
-}
-
-function FileTypeIcon({ ext }: { ext: string }) {
-  const colors: Record<string, string> = {
-    pdf: 'text-red-500',
-    xlsx: 'text-green-600',
-    xls: 'text-green-600',
-    csv: 'text-green-700',
-    docx: 'text-blue-500',
-    jpg: 'text-purple-500',
-    jpeg: 'text-purple-500',
-    png: 'text-purple-500',
-  };
-  return (
-    <span className={`text-xs font-bold uppercase ${colors[ext] ?? 'text-gray-400'} w-10 text-center`}>
-      {ext.toUpperCase()}
-    </span>
   );
 }

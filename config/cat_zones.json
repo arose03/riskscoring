@@ -1,0 +1,231 @@
+{
+  "state_loads": {
+    "TX": {
+      "default": 1.12,
+      "north_panhandle": 1.15,
+      "notes": "TX hail territory. North TX / panhandle gets higher load."
+    },
+    "OK": {
+      "default": 1.10,
+      "notes": "Tornado alley / hail exposure"
+    },
+    "KS": {
+      "default": 1.08,
+      "notes": "Tornado alley / hail exposure"
+    },
+    "NE": {
+      "default": 1.08,
+      "notes": "Tornado alley / hail exposure"
+    },
+    "MO": {
+      "default": 1.05,
+      "notes": "Tornado / hail exposure"
+    },
+    "IL": {
+      "default": 1.05,
+      "notes": "Tornado / hail exposure"
+    },
+    "IN": {
+      "default": 1.05,
+      "notes": "Tornado / hail exposure"
+    },
+    "OH": {
+      "default": 1.05,
+      "notes": "Tornado / hail exposure"
+    },
+    "TN": {
+      "default": 1.05,
+      "notes": "Tornado / hail exposure"
+    },
+    "AL": {
+      "default": 1.05,
+      "notes": "Tornado / SE wind"
+    },
+    "GA": {
+      "default": 1.03,
+      "notes": "SE wind"
+    },
+    "MS": {
+      "default": 1.05,
+      "notes": "Tornado / SE wind"
+    },
+    "AR": {
+      "default": 1.08,
+      "notes": "Tornado / hail exposure"
+    },
+    "LA": {
+      "default": 1.15,
+      "coastal": 1.30,
+      "notes": "Hurricane / named storm exposure"
+    },
+    "FL": {
+      "default": 1.25,
+      "coastal": 1.35,
+      "notes": "Hurricane / named storm. Entire state elevated."
+    },
+    "SC": {
+      "default": 1.08,
+      "coastal": 1.25,
+      "notes": "Hurricane / named storm coastal exposure"
+    },
+    "NC": {
+      "default": 1.05,
+      "coastal": 1.25,
+      "notes": "Hurricane / named storm coastal exposure"
+    },
+    "VA": {
+      "default": 1.03,
+      "coastal": 1.15,
+      "notes": "Coastal wind exposure"
+    },
+    "MD": {
+      "default": 1.03,
+      "coastal": 1.10,
+      "notes": "Coastal wind exposure"
+    },
+    "NJ": {
+      "default": 1.03,
+      "coastal": 1.15,
+      "notes": "Nor'easter / coastal wind exposure"
+    },
+    "NY": {
+      "default": 1.03,
+      "coastal": 1.15,
+      "notes": "Nor'easter / coastal wind"
+    },
+    "MA": {
+      "default": 1.05,
+      "coastal": 1.15,
+      "notes": "Nor'easter / freeze"
+    },
+    "CT": {
+      "default": 1.05,
+      "coastal": 1.15,
+      "notes": "Nor'easter"
+    },
+    "RI": {
+      "default": 1.05,
+      "coastal": 1.15,
+      "notes": "Nor'easter"
+    },
+    "ME": {
+      "default": 1.05,
+      "notes": "Freeze / Nor'easter"
+    },
+    "NH": {
+      "default": 1.05,
+      "notes": "Freeze / Nor'easter"
+    },
+    "VT": {
+      "default": 1.05,
+      "notes": "Freeze"
+    },
+    "MN": {
+      "default": 1.05,
+      "notes": "Freeze / severe winter"
+    },
+    "WI": {
+      "default": 1.05,
+      "notes": "Freeze / severe winter"
+    },
+    "MI": {
+      "default": 1.05,
+      "notes": "Freeze / severe winter"
+    },
+    "IA": {
+      "default": 1.05,
+      "notes": "Freeze / tornado"
+    },
+    "ND": {
+      "default": 1.05,
+      "notes": "Freeze / severe winter"
+    },
+    "SD": {
+      "default": 1.05,
+      "notes": "Freeze / severe winter"
+    },
+    "MT": {
+      "default": 1.03,
+      "notes": "Freeze"
+    },
+    "WY": {
+      "default": 1.03,
+      "notes": "Freeze / hail"
+    },
+    "CO": {
+      "default": 1.05,
+      "notes": "Hail / freeze"
+    },
+    "UT": {
+      "default": 1.03,
+      "notes": "Moderate"
+    },
+    "NV": {
+      "default": 1.00,
+      "notes": "Low CAT"
+    },
+    "AZ": {
+      "default": 1.00,
+      "notes": "Low CAT"
+    },
+    "NM": {
+      "default": 1.00,
+      "notes": "Low CAT"
+    },
+    "ID": {
+      "default": 1.00,
+      "notes": "Low CAT"
+    },
+    "WA": {
+      "default": 1.00,
+      "notes": "Low CAT"
+    },
+    "OR": {
+      "default": 1.00,
+      "notes": "Low CAT"
+    },
+    "CA": {
+      "default": 1.10,
+      "notes": "Earthquake / wildfire"
+    },
+    "PA": {
+      "default": 1.03,
+      "notes": "Moderate - some freeze"
+    },
+    "DE": {
+      "default": 1.03,
+      "notes": "Moderate"
+    },
+    "WV": {
+      "default": 1.03,
+      "notes": "Moderate"
+    },
+    "KY": {
+      "default": 1.03,
+      "notes": "Moderate tornado"
+    },
+    "DC": {
+      "default": 1.03,
+      "notes": "Moderate"
+    }
+  },
+  "north_panhandle_tx_zips": [
+    "79001", "79002", "79003", "79005", "79007", "79009", "79010", "79011",
+    "79012", "79013", "79014", "79015", "79016", "79018", "79019", "79021",
+    "79022", "79024", "79025", "79027", "79029", "79031", "79032", "79033",
+    "79034", "79036", "79039", "79040", "79041", "79042", "79043", "79044",
+    "79045", "79046", "79051", "79052", "79053", "79054", "79056", "79057",
+    "79058", "79059", "79061", "79063", "79064", "79065", "79066", "79068",
+    "79070", "79072", "79073", "79078", "79079", "79080", "79081", "79082",
+    "79083", "79084", "79085", "79086", "79087", "79088", "79091", "79092",
+    "79093", "79094", "79095", "79096", "79097", "79098", "79099"
+  ],
+  "florida_coastal_counties": [
+    "Broward", "Miami-Dade", "Palm Beach", "Monroe", "Collier", "Lee",
+    "Charlotte", "Sarasota", "Manatee", "Pinellas", "Hillsborough",
+    "Pasco", "Hernando", "Citrus", "Levy", "Dixie", "Taylor", "Jefferson",
+    "Wakulla", "Franklin", "Gulf", "Bay", "Walton", "Okaloosa", "Santa Rosa",
+    "Escambia", "Indian River", "St. Lucie", "Martin", "Brevard",
+    "Volusia", "Flagler", "St. Johns", "Duval", "Nassau"
+  ]
+}

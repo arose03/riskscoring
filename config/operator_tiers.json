@@ -1,0 +1,76 @@
+{
+  "tiers": {
+    "top_institutional": {
+      "factor": 0.92,
+      "examples": ["ACC", "American Campus Communities", "Cardinal Group", "Landmark Properties", "Greystar"],
+      "description": "Top institutional operators (30K+ beds)",
+      "operators": [
+        "American Campus Communities",
+        "ACC",
+        "Cardinal Group Management",
+        "Landmark Properties",
+        "Greystar",
+        "Greystar Real Estate Partners",
+        "Balfour Beatty Campus Solutions",
+        "EdR",
+        "Education Realty Trust",
+        "Toll Brothers Apartment Living",
+        "Equity Residential",
+        "AvalonBay Communities",
+        "UDR"
+      ]
+    },
+    "large_professional": {
+      "factor": 0.97,
+      "examples": ["Asset Living", "The Preiss Company", "Aspen Heights"],
+      "description": "Large professional operators (10-30K beds)",
+      "operators": [
+        "Asset Living",
+        "The Preiss Company",
+        "Aspen Heights",
+        "Aspen Heights Partners",
+        "Campus Realty",
+        "Peak Campus",
+        "CA Ventures",
+        "Catalyst",
+        "Redstone Residential",
+        "Monarch Investment",
+        "Inland American",
+        "Vesper Holdings",
+        "Knightvest Management",
+        "JVM Realty",
+        "Weidner Apartment Homes",
+        "Lincoln Property Company"
+      ]
+    },
+    "mid_tier": {
+      "factor": 1.00,
+      "examples": ["Vie Management", "Campus Advantage"],
+      "description": "Mid-tier professional operators (1-10K beds)",
+      "operators": [
+        "Vie Management",
+        "Campus Advantage",
+        "Campus Evolution Villages",
+        "CA Residential",
+        "University House",
+        "Collegiate Housing Partners",
+        "Rise Residential",
+        "TWO Capital Partners",
+        "Southwest Student Housing",
+        "Inland Student Living",
+        "Fountain Residential",
+        "Champion Partners",
+        "Harkins Management",
+        "21c Lodgings",
+        "Global Student Accommodation",
+        "Yugo",
+        "Pushpin Housing"
+      ]
+    },
+    "small_unknown": {
+      "factor": 1.02,
+      "description": "Small or unknown operators (<1K beds)",
+      "operators": []
+    }
+  }
+}
